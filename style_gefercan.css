@@ -40,7 +40,13 @@
 			border-radius:30px;
 		}
 
-
+		#navheader{
+			width:100%;
+		}
+		 #nav1,#nav2,#nav3{
+			 width:20%;
+			 float:left;
+		 }
 
 
 

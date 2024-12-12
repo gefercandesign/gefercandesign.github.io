@@ -52,6 +52,8 @@
 		  	padding:1% 2% 1% 2%;
 			margin: 1% 0% 1% 5%;
 		}
+		#button{
+		display:hidden;}
 		/*__________________text___________________________________*/
 		#name{
 			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;

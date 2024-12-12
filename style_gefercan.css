@@ -1,1 +1,264 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
+
+
+body
+{
+	width: 100%;
+	/*______box-sizing:border-box;__________________*/
+	border: 0% 0% 0% 0%;
+	padding: 0% 0% 0% 0%;
+	margin: 0% 0% 0% 0%;
+	
+ 	background-size:80%;
+	background-position:center;
+	background-repeat:no-repeat;
+	background-color:#f20103;
+	background-attachment: fixed;
+	opacity:1;
+}
+
+/*___________________image containers___________________________________*/
+
+/*__________
+@media (min-aspect-ratio: 16/9) {
+  .video-container iframe {
+    height: 56.25vw;
+  }
+}
+    
+@media (max-aspect-ratio: 16/9) {
+  .video-container iframe {
+    width: 177.78vh;
+  }
+}
+
+iframe {
+  position: fixed;
+  top: -6%;
+  left: 0%;
+  width: 125vw;
+  height: 125vh;
+  z-index: -3;opacity:0.3;
+}
+___________________*/
+
+#cover{
+
+	width: 100%;
+	min-height: 100%;
+	padding:0% 0% 0% 0%;
+	margin:0% 0% 0% 0%;
+	border:none;}
+	/*_____backgorund-image:url("https://www.behance.net/gallery/130796677/EIPF-Poster-connecting-minds/modules/953105365");
+	
+
+
+
+/*__________________general container __________________________________*/
+
+
+#container{
+	
+	width: 70%;/*60%;*/
+	padding:1% 0% 35% 0%;
+	margin:10% 0% 0% 20%; /*22% 0% 0% 10%;*/
+	
+	border:none;
+	/*_____
+	       background-color:#333441 ;
+	       box-sizing:border-box;
+	__________________*/
+	opacity:0.9;
+	border-radius:30px;
+}
+
+
+
+
+
+/*__________________text___________________________________*/
+
+#name{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:3.5em;
+	font-weight:bold;
+	word-break: normal;
+	word-wrap: normal;
+	word-spacing: normal;
+	
+}
+
+#intro_text{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+	font-size:1em;
+	font-weight:normal;
+	line-height: 1.5;
+	text-align: left;
+	word-break: normal;
+	word-wrap: break-word;
+	word-spacing: normal;
+}
+
+
+.link_btn{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:1.2em;
+	font-weight:normal;
+	line-height: 1.5;
+}
+
+
+.subtitle_section{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:1.3em;
+	font-weight:bolder;
+	line-height: 1.2;
+}
+
+.intro_section{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:1em;
+	font-weight:normal;
+	line-height: 1.5;
+}
+
+p::first-line{
+	line-height: 1.5;
+}
+
+p{
+	line-height: 1.5;
+}
+
+
+
+
+
+/*___________________sections___________________________________*/
+
+	.section{
+	width: 15%;
+	padding:1% 2% 0% 2%;
+	margin: 1% 1% 0% 1%;
+	float:left;color:white;
+	/*background-color: darkgray;*/
+}
+
+
+
+.box{
+	width: 100%;
+	padding:0% 2% 0% 0%;
+	margin: 0% 5% 2% 0%;
+	float:left;color:white;
+}
+
+
+.subtitle_section
+{ 
+	width: 90%;
+	margin: 5% 5% 5% 0%;
+	border-style:solid;
+	border-width:1px 0px 1px 0px;
+	padding: 5% 0% 5% 0%;color:white;
+}
+
+.link_btn
+{ 
+	width: 100%;
+	margin: 5% 0% 5% 0%;
+	color:white;
+}
+	
+#logo {
+	width:30%; 
+	height: auto;
+	padding:2% 5% 2% 0%;
+	margin:2% 5% 2% 0%;
+}
+
+#name{
+	/*________box-sizing:border-box;________________________*/
+	color:white;
+	/*background-color: darkgray;*/
+	border-width: 30px 0px 0px 0px;
+	border-style: solid;
+	padding: 9% 0% 5% 0%;
+	
+}
+
+#intro_text{
+	border:none;
+	padding: 5% 0% 5% 0%;
+	border-style: solid;
+	border-width:1px 0px 30px 0px;
+}
+
+#section1{
+	display:block;
+}
+
+/*#section1, #section2, #section3 {
+	border-width:1px 0px 0px 0px;
+	border-style:solid;
+	border-color: grey;
+}*/
+
+
+
+/*-----------------------------------------------*/
+
+#fli, #tmb {display:none;}
+
+
+
+/*___________________psection patches ___________________________________*/
+#section0{
+	width:15%;
+
+}
+/*___________________end patches ___________________________________*/
+
+
+
+/*-------------canary------------------*/
+
+.stylenumber{
+	position:fixed;
+	z-index:3;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+	font-size:4em;
+	top:3%;
+	color:black;
+	opacity:0.1;
+}	
+#dos, #tres, #cuatro {display:none;}
+#uno{display:block}
+
+
+
+			
+/*----------------links ---------------*/
+
+a:visited {
+    text-decoration: none;
+	
+}
+a:link {
+	text-decoration: none;
+	color:#403E3E;
+}
+
+a:hover {
+	font-style: oblique;
+	text-decoration: underline;
+	font-weight: bolder;
+	color:white;
+}
+
+
+
 

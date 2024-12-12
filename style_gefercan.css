@@ -49,7 +49,8 @@
 			 margin: 1% 0% 1% 0%;
 		 }
 		#menu, #webname
-		{ 	float:left;
+		{ 	width:30%;
+		 	float:left;
 		  	padding:1% 5% 1% 5%;
 			margin: 5% 0% 1% 5%;
 		}

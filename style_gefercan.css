@@ -4,24 +4,21 @@
 /*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
 @media only screen and (min-width: 1780px) {
 
-	body
-	{
-		width: 100%;
-		/*______box-sizing:border-box;__________________*/
-		border: 0% 0% 0% 0%;
-		padding: 0% 0% 0% 0%;
-		margin: 0% 0% 0% 0%;
-		
-	 	background-size:80%;
-		background-position:center;
-		background-repeat:no-repeat;
-		background-color:#f20103;
-		background-attachment: fixed;
-		opacity:1;
-	}
-
-
-
+		body
+		{
+			width: 100%;
+			/*______box-sizing:border-box;__________________*/
+			border: 0% 0% 0% 0%;
+			padding: 0% 0% 0% 0%;
+			margin: 0% 0% 0% 0%;
+			
+		 	background-size:80%;
+			background-position:center;
+			background-repeat:no-repeat;
+			background-color:#f20103;
+			background-attachment: fixed;
+			opacity:1;
+		}
 		/*__________________general container __________________________________*/
 		
 		
@@ -31,10 +28,6 @@
 			padding:1% 0% 35% 0%;
 			margin:10% 0% 0% 20%; /*22% 0% 0% 10%;*/
 			border:none;
-			/*_____
-			       background-color:#333441 ;
-			       box-sizing:border-box;
-			__________________*/
 			opacity:0.9;
 			border-radius:30px;
 		}
@@ -54,10 +47,7 @@
 		  	padding:1% 5% 1% 5%;
 			margin: 5% 0% 1% 5%;
 		}
-
-
 		/*__________________text___________________________________*/
-		
 		#name{
 			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 			font-size:3.5em;

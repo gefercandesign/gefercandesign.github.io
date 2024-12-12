@@ -30,7 +30,6 @@
 			width: 70%;/*60%;*/
 			padding:1% 0% 35% 0%;
 			margin:10% 0% 0% 20%; /*22% 0% 0% 10%;*/
-			
 			border:none;
 			/*_____
 			       background-color:#333441 ;
@@ -46,6 +45,8 @@
 		 #nav1,#nav2,#nav3{
 			 width:20%;
 			 float:left;
+			 padding:2%;
+			 margin: 1% 0% 1% 0%;
 		 }
 		#menu, #webname{ float:left;}
 

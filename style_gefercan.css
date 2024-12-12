@@ -104,7 +104,8 @@
 				width: 100%;
 				padding:1% 2% 0% 2%;
 				margin: 1% 1% 0% 1%;
-				float:left;color:white;
+				float:none;
+				color:white;
 				/*background-color: darkgray;*/
 			}
 			

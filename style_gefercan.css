@@ -218,37 +218,6 @@
 			}
 		#image_uxui{ object-fit: cover;}
 
-			/*___________________sections___________________________ /*
-
-			.subtitle_section
-			{ 
-				margin: 5% 5% 5% 0%;
-				border-style:solid;
-				border-width:1px 0px 1px 0px;
-				padding: 5% 0% 5% 0%;color:white;
-			}
-
-			
-			.link_btn
-			{ 	margin: 5% 0% 5% 0%;
-				color:white;
-			}
-				
-			#logo {
-				height: auto;
-				padding:1% 5% 1% 0%;
-				margin:2% 5% 2% 0%;
-				grid-column: 1/2;
-				grid-row:1;
-			}
-			
-			#name{	
-			}
-			
-			#intro_text{
-				;
-			}
-			
 			
 			/*-------------canary------------------*/
 			
@@ -467,7 +436,6 @@ line-height: 1.5;
 }
 
 #logo {
-	width:30%;
 	padding:2% 25% 2% 0%;
 	margin:2% 5% 2% 0%;
 }
@@ -486,28 +454,6 @@ line-height: 1.5;
 	border-width:1px 0px 0px 0px;
 	padding: 8% 0% 5% 0%;
 }
-
-#section1{
-	display:block;
-}
-
-/*#section1, #section2, #section3 {
-	border-width:1px 0px 0px 0px;
-	border-style:solid;
-	border-color: grey;
-}
-*/
-
-/*-----------------------------------------------*/
-
-#fli, #tmb {display:none;}
-
-
-
-/*___________________psection patches ___________________________________*/
-#section0{
-	width:20%;
-	margin-right:3%;
 
 }
 /*___________________end patches ___________________________________*/
@@ -687,7 +633,6 @@ a:hover {
 		}
 			
 		#logo {
-			width:30%;
 			height:auto;
 			padding:0% 5% 5% 5%;
 			margin:5% 5% 0% 0%;
@@ -710,30 +655,6 @@ a:hover {
 			margin:5% 0% 2% 5%;
 			padding:0% 0% 8% 0%;
 		}
-		
-		#section1{
-			display:block;
-		}
-		
-		/*#section1, #section2, #section3 {
-			border-width:0px 0px 20px 0px;
-			border-style:solid;
-			border-color: grey;
-		}*/
-
-		#section0{
-			
-			
-			width: 90%;
-			top:5%;
-			left:auto;
-			padding:5% 0% 50% 10%;
-			margin: 0% 0% 70% 0%;
-			background-color: transparent;
-			float:none;
-			border-bottom:0px;
-		}
-		
 		
 		
 		

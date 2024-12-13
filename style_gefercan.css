@@ -3,69 +3,171 @@
 
 /*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
 @media only screen and (min-width: 1780px) {
+@charset "utf-8";
+/* CSS Document #f5f5f7 */
 
-		body
+/*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
+
+			body
 		{
 			width: 100%;
-			/*______box-sizing:border-box;__________________*/
-			border: 0% 0% 0% 0%;
-			padding: 0% 0% 0% 0%;
+			display:grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr 1fr;
+			justify-items:center;
+			min-height:100%;
+			padding:6% 0% 2% 0%;
 			margin: 0% 0% 0% 0%;
-			
 		 	background-size:80%;
 			background-position:center;
 			background-repeat:no-repeat;
-			background-color:#f20103;
+			background-color:#f5f5f7;
 			background-attachment: fixed;
 			opacity:1;
 		}
+
 		/*__________________general container __________________________________*/
+
 		#container{
-			
-			width: 70%;/*60%;*/
-			padding:1% 0% 35% 0%;
-			margin:10% 0% 0% 20%; /*22% 0% 0% 10%;*/
-			border:none;
+			display:grid; 
+			grid-column:1/2; max-height:480vh;overflow:hidden;
+			grid-template-columns: repeat(12,1fr) ;
+			grid-template-rows: repeat(10,1fr) ;
+			grid-area:container;
+			justify-items:center;
+			column-gap:1%;
+			row-gap:1%;
 			opacity:0.9;
-			border-radius:30px;
+			border-radius:30px;border-style:solid;border-color:yellow;
 		}
 
 		#navheader{
-			width:100%;padding:0%;
-			margin: 2% 0% 0%0%;
-		}
-		 #nav1,#nav2,#nav3{
-			 width:15%;
-			 float:left;
-			 padding:1% 2% 1% 2%;
-			 margin: 1% 0% 1% 0%;
-		 }
-		#menu
-		{ 	width:48%;
-		 	float:left;
-		  	padding:1% 2% 1% 2%;
-			margin: 1% 0% 1% 2%;
-		}
-		#webname
-		{ 	width:15%;
-		 	float:left;
-		  	padding:1% 2% 1% 2%;
-			margin: 1% 0% 1% 5%;
-		}
-		#button{
-		display:hidden;}
-		/*__________________text___________________________________*/
-		#name{
-			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-			font-size:3.5em;
-			font-weight:bold;
-			word-break: normal;
-			word-wrap: normal;
-			word-spacing: normal;
-			
+			display:grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr 1fr fr;
+			grid-template-rows: 1fr;
+			position:fixed;
+			width:96%;
+			height:8vh;
+			padding:0% 0% 0% 0%;
+			margin: 0% 0% 0% 0%;
+			top:2%;
+			border-radius:30px;border-style:solid;border-color:blue;
+			background-color:#000f0f;
+			z-index:3;
 		}
 
-			#intro_text{
+		.section{
+			padding:5%;
+			margin: 0% 1%;
+			color:#a8a8a8;
+			border-radius:30px;
+			border-style:solid;
+			border-color:#dcdcdc;
+		}
+
+		#section1{  grid-column:2/12; grid-row:1/5; padding:2%; 
+			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(5,1fr); 
+			    background-color:#9f1f1f;}
+
+		#section2{  grid-column:2/12; grid-row:5/6;background-color:#f5f5f7;
+			    background-repeat:no-repeat; 
+                            background-image: url("./images/design_gefercan_infographics_diabetes.webp");
+			    background-position:right;
+			    background-size:80%;  
+			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
+		}
+
+		#section3{  grid-column:2/12; grid-row:6/7;background-color:#f5f5f7;
+			    background-repeat:no-repeat; 
+                            background-image: url("./images/design_gefercan_illustration1.webp");
+			    background-position:right; background-size:60%;
+			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
+		}
+		#section4{  grid-column:2/12; grid-row:7/8;  background-color:#f5f5f7; 
+			    background-repeat:no-repeat; 
+                            background-image: url("./images/design_gefercan_UXUI_portfolio_page2.webp");
+			    background-position:right;
+			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
+		}
+		#section5{  grid-column:2/12; grid-row:8/9; 
+			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
+		}
+		#section6{  background-color:#e7e6e6;
+			    grid-column:2/12; grid-row:9/11;padding:2%; display:grid; grid-template-columns: repeat(12,1fr);grid-template-rows: repeat(3,1fr); }
+		
+		#subtitle_section2{grid-column:1;grid-row:1;}
+		#intro_text2{grid-column:1;grid-row:2;}
+		#links_infographics{grid-column:1;grid-row:3;}
+		#image_infographics{grid-column:2/3;grid-row:1/3;}
+
+		#subtitle_section3{grid-column:1;grid-row:1;}
+		#intro_text3{grid-column:1;grid-row:2;}
+		#links_illustration{grid-colum:1;grid-row:3;}
+		#image_illustration{grid-colum:2/3;grid-row:1/3;}
+
+		#subtitle_section4{grid-colum:1;grid-row:1;}
+		#intro_text4{grid-column:1;grid-row:2;}
+		#links_uxui{grid-column:1; grid-row:3;}
+		#image_uxui{grid-column:2/3; grid-row:1/3;}
+
+		#subtitle_section5{grid-column:1;grid-row:1;}
+		#intro_text5{grid-column:1;grid-row:2;}
+		#links_editorial{grid-column:1;grid-row:3;}
+		#image_editorial{grid-column:2/3;grid-row:1/3;}
+		
+		#subtitle_section6{grid-column:1;grid-row:1;}
+		#intro_text6 {grid-column:1/3;grid-row:1/3;}
+		#social_media{grid-column:4;grid-row:1/3;}
+		#contributions{grid-column:6;grid-row:1/3;}
+		#references{grid-column:8;grid-row:1/2;}
+
+		#menu
+		{ 	grid-column:2/6;grid-row:1;
+		 	float:left;
+		  	padding:0% 0% 0% 0%;
+			margin: 0% 0% 0% 0%;
+			border-radius:30px;border-style:solid;border-color:black;border:
+		}
+
+		#webname
+		{ 	grid-column:1/2; grid-row:1;
+		 	float:left;
+		  	padding:2% 0% 1% 1%;
+			margin: 1% 0% 0% 2%;color:white;
+			border-radius:30px;border-style:solid;border-color:black;
+		}
+		
+		#nav1,#nav2,#nav3,#nav4{
+			 width:16%;color:#ffffff;
+			 float:left;
+			 padding:1% 2% 1% 2%;
+			 margin: 0% 0% 0% 2%;border-radius:30px;border-style:solid;border-color:black;
+		 }
+
+		#footer{
+			grid-column:1/13; grid-row:11/12;
+		}
+
+		#button{
+			display:none;
+		}
+
+
+		#name{
+				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+				font-size:3.5em;
+				font-weight:bold;
+				word-break: normal;
+				word-wrap: normal;
+				word-spacing: normal;color:white;
+				border-width: 1px 0px 0px 0px;
+				border-style: solid;
+				padding: 5% 0% 1% 0%;
+				grid-column: 1;
+				grid-row:2/3;
+		}
+
+		#intro_text{
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
 				font-size:1em;
 				font-weight:normal;
@@ -74,122 +176,86 @@
 				word-break: normal;
 				word-wrap: break-word;
 				word-spacing: normal;
+				border:none;
+				padding:1% 0% 5% 0%;
+				border-style: solid;
+				border-width:0px 0px 40px 0px;
+				grid-column: 3;
+				grid-row:3;
 			}
 			
-			
-			.link_btn{
+		.link_btn{
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 				font-size:1.2em;
 				font-weight:normal;
 				line-height: 1.5;
 			}
-			
-			
-			.subtitle_section{
+		.subtitle_section{
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 				font-size:1.3em;
 				font-weight:bolder;
 				line-height: 1.2;
 			}
+		#subtitle_section2,#subtitle_section3,#subtitle_section4,#subtitle_section5{
+				font-size:3em;
+			}
 
-			.intro_section{
+		.intro_section{
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
 				font-size:1em;
 				font-weight:normal;
 				line-height: 1.5;
 			}
 			
-			p::first-line{
+		p::first-line{
 				line-height: 1.5;
 			}
 			
-			p{
+		p{
 				line-height: 1.5;
 			}
+		.link_footer{
+			}
+		#image_uxui{ object-fit: cover;}
 
-			/*___________________sections___________________________________*/
-			
-				.section{
-				width: 100%;
-				padding:1% 2% 0% 2%;
-				margin: 1% 1% 0% 1%;
-				float:none;
-				color:white;
-				/*background-color: darkgray;*/
-			}
-			
-			.box{
-				width: 100%;
-				padding:0% 2% 0% 0%;
-				margin: 0% 5% 2% 0%;
-				float:left;color:white;
-			}
+			/*___________________sections___________________________ /*
 
 			.subtitle_section
 			{ 
-				width: 90%;
 				margin: 5% 5% 5% 0%;
 				border-style:solid;
 				border-width:1px 0px 1px 0px;
 				padding: 5% 0% 5% 0%;color:white;
 			}
+
 			
 			.link_btn
-			{ 
-				width: 100%;
-				margin: 5% 0% 5% 0%;
+			{ 	margin: 5% 0% 5% 0%;
 				color:white;
 			}
 				
 			#logo {
-				width:30%; 
 				height: auto;
-				padding:2% 5% 2% 0%;
+				padding:1% 5% 1% 0%;
 				margin:2% 5% 2% 0%;
+				grid-column: 1/2;
+				grid-row:1;
 			}
 			
-			#name{
-				/*________box-sizing:border-box;________________________*/
-				color:white;
-				/*background-color: darkgray;*/
-				border-width: 30px 0px 0px 0px;
-				border-style: solid;
-				padding: 9% 0% 5% 0%;
-				
+			#name{	
 			}
 			
 			#intro_text{
-				border:none;
-				padding: 5% 0% 5% 0%;
-				border-style: solid;
-				border-width:1px 0px 30px 0px;
+				;
 			}
 			
-			#section1{
-				display:block;
-			}
-
-
-			/*-----------------------------------------------*/
-			
-			#fli, #tmb {display:none;}
-			
-			
-			
-			/*___________________psection patches ___________________________________*/
-			#section0{
-				width:15%;
-			
-			}
-			/*___________________end patches ___________________________________*/
-
-
 			
 			/*-------------canary------------------*/
 			
 			.stylenumber{
 				position:fixed;
-				z-index:3;
+				left:3%;
+				z-index:13;
 				font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
 				font-size:4em;
 				top:3%;
@@ -197,9 +263,8 @@
 				opacity:0.1;
 			}	
 			#dos, #tres, #cuatro {display:none;}
-			#uno{display:block}
-			
-			
+			#uno{display:block;}
+		
 			
 						
 			/*----------------links ---------------*/
@@ -220,8 +285,6 @@
 				color:white;
 			}
 }
-
-
 
 /*__________________general container __________________________________*/
 

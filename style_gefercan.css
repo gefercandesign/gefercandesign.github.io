@@ -66,7 +66,7 @@
 
 		#section2{  grid-column:2/12; grid-row:5/6;background-color:#f5f5f7;
 			    background-repeat:no-repeat; 
-                            background-image: url("./images/design_gefercan_infographics_diabetes.webp");
+                            background-image: url("/images/design_gefercan_infographics_diabetes.webp");
 			    background-position:right;
 			    background-size:80%;  
 			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
@@ -74,13 +74,13 @@
 
 		#section3{  grid-column:2/12; grid-row:6/7;background-color:#f5f5f7;
 			    background-repeat:no-repeat; 
-                            background-image: url("./images/design_gefercan_illustration1.webp");
+                            background-image: url("/images/design_gefercan_illustration1.webp");
 			    background-position:right; background-size:60%;
 			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
 		}
 		#section4{  grid-column:2/12; grid-row:7/8;  background-color:#f5f5f7; 
 			    background-repeat:no-repeat; 
-                            background-image: url("./images/design_gefercan_UXUI_portfolio_page2.webp");
+                            background-image: url("/images/design_gefercan_UXUI_portfolio_page2.webp");
 			    background-position:right;
 			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
 		}

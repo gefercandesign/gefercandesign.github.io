@@ -1,9 +1,4 @@
 @charset "utf-8";
-/* CSS Document */
-
-/*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
-@media only screen and (min-width: 1780px) {
-@charset "utf-8";
 /* CSS Document #f5f5f7 */
 
 /*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
@@ -51,7 +46,7 @@
 			padding:0% 0% 0% 0%;
 			margin: 0% 0% 0% 0%;
 			top:2%;
-			border-radius:30px;border-style:solid;border-color:#dcdcdc;
+			border-radius:30px;border-style:solid;border-color:blue;
 			background-color:#000f0f;
 			z-index:3;
 		}
@@ -71,7 +66,7 @@
 
 		#section2{  grid-column:2/12; grid-row:5/6;background-color:#f5f5f7;
 			    background-repeat:no-repeat; 
-                            background-image: url("/images/design_gefercan_infographics_diabetes.webp");
+                            background-image: url("./images/design_gefercan_infographics_diabetes.webp");
 			    background-position:right;
 			    background-size:80%;  
 			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
@@ -79,13 +74,13 @@
 
 		#section3{  grid-column:2/12; grid-row:6/7;background-color:#f5f5f7;
 			    background-repeat:no-repeat; 
-                            background-image: url("/images/design_gefercan_illustration1.webp");
+                            background-image: url("./images/design_gefercan_illustration1.webp");
 			    background-position:right; background-size:60%;
 			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
 		}
 		#section4{  grid-column:2/12; grid-row:7/8;  background-color:#f5f5f7; 
 			    background-repeat:no-repeat; 
-                            background-image: url("/images/design_gefercan_UXUI_portfolio_page2.webp");
+                            background-image: url("./images/design_gefercan_UXUI_portfolio_page2.webp");
 			    background-position:right;
 			    display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); 
 		}
@@ -218,6 +213,37 @@
 			}
 		#image_uxui{ object-fit: cover;}
 
+			/*___________________sections___________________________ /*
+
+			.subtitle_section
+			{ 
+				margin: 5% 5% 5% 0%;
+				border-style:solid;
+				border-width:1px 0px 1px 0px;
+				padding: 5% 0% 5% 0%;color:white;
+			}
+
+			
+			.link_btn
+			{ 	margin: 5% 0% 5% 0%;
+				color:white;
+			}
+				
+			#logo {
+				height: auto;
+				padding:1% 5% 1% 0%;
+				margin:2% 5% 2% 0%;
+				grid-column: 1/2;
+				grid-row:1;
+			}
+			
+			#name{	
+			}
+			
+			#intro_text{
+				;
+			}
+			
 			
 			/*-------------canary------------------*/
 			
@@ -254,454 +280,3 @@
 				color:white;
 			}
 }
-
-/*__________________general container __________________________________*/
-
-
-@media only screen and (max-width: 1780px) {
-	
-		  	body{
-			background-color:#A84343;
-			}
-			
-			#container{
-			width: 60%;
-			padding: 1% 1% 40% 8%;
-			margin: 7% 10% 0% 25%;
-			
-		/*___________background-color: #1f2F1F;_________________________*/
-			border:none;
-			border-radius:20px;
-			opacity:0.9;
-			}
-			
-			.section{
-			width: 18%;
-			padding:0% 1% 0% 1%;
-			margin: 1% 1% 2% 1%;
-			float:left;
-			}
-
-}
-
-@media only screen and (max-width: 1440px) {
-		  	body{
-			
-			background-color:#864F75;
-		
-			}
-			#container{
-			width: 65%;
-			padding:1% 1% 50% 8%;
-			/*___________background-color: #1f2F1F;_________________________*/
-			border:none;
-			border-radius:20px;
-			opacity:0.9;
-			}
-			.section{
-			width: 18%;
-			padding:0% 1% 0% 1%;
-			margin: 1% 1% 2% 1%;
-			float:left;
-			}
-
-}
-
-
-
-@media only screen and (max-width: 1366px) {
-		  	body
-			{
-			
-			background-color:#B98F10;
-		
-			}
-			
-			#container{
-			
-			width: 65%;
-			padding:1% 1% 50% 5%;
-			margin:5% 0% 0% 25%;
-			/*___________background-color: #1f2F1F;_________________________*/
-			border:none;
-			border-radius:20px;
-			opacity:0.9;
-			}
-			.section{
-			width: 18%;
-			padding:0% 1% 0% 1%;
-			margin: 1% 1% 2% 1%;
-			float:left;
-			}
-
-}
-
-
-@media only screen and (max-width: 1280px) {
-		  	#container{
-			
-			width: 65%;
-			padding:1% 1% 50% 5%;
-			margin:15% 0% 0% 25%;
-			/*___________background-color: #1f2F1F;_________________________*/
-			border:none;
-			border-radius:20px;
-			opacity:0.9;
-			}
-}
-
-
-/*__________________text___________________________________*/
-
-
-#name{
-	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size:2.8em;
-	font-weight:bold;
-	word-break: normal;
-	word-wrap: normal;
-	word-spacing: normal;
-	
-}
-
-#intro_text{
-	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
-	font-size:0.9em;
-	font-weight:normal;
-	line-height:1.5;
-	text-align: left;
-	word-break: normal;
-	word-wrap: break-word;
-	word-spacing: normal;
-}
-
-
-.link_btn{
-	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size:1em;
-	font-weight:normal;
-	line-height:1.5;
-}
-
-
-.subtitle_section{
-	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size:1.2em;
-	font-weight:bolder;
-	line-height:1.5;
-}
-
-.intro_section{
-	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size:1em;
-	font-weight:normal;
-	line-height:1.5;
-}
-
-p::first-line{
-line-height: 1.5;
-}
-
-p{
-line-height: 1.5;	
-}
-
-
-/*___________________sections___________________________________*/
-
-
-
-
-
-.box{
-	width: 100%;
-	margin: 1% 4% 2% 4%;
-	float:left;
-}
-
-
-.subtitle_section
-{ 
-	width: 90%;
-	margin: 2% 5% 2% 0%;
-	border-style:solid;
-	border-width:1px 0px 1px 0px;
-	padding: 5% 0% 5% 0%;
-}
-
-.link_btn
-{ 
-	width: 100%;
-	margin: 5% 5% 8% 0%;
-}
-
-#logo {
-	padding:2% 25% 2% 0%;
-	margin:2% 5% 2% 0%;
-}
-
-
-#name{
-	box-sizing:border-box;
-	border-width:20px 0px 20px 0px;
-	border-style: solid;
-	padding: 8% 0% 15% 0%;
-}
-
-#intro_text{
-	
-	border-style:solid;
-	border-width:1px 0px 0px 0px;
-	padding: 8% 0% 5% 0%;
-}
-
-}
-/*___________________end patches ___________________________________*/
-
-/*-------------canary------------------*/
-
-
-.stylenumber{
-	position:fixed;
-	z-index:3;
-	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
-	font-size:4em;
-	top:3%;
-	color:darkgray;
-	opacity:0.2;
-}
-#cuatro, #tres, #uno {display:none;}
-#dos{display:block}
-/*___________________image containers___________________________________*/
-
-
-
-#fli, #tmb {display:none;}
-
-/*___________________image containers___________________________________*/
-
-
-			
-/*-------------------------------*/
-a:visited {
-    text-decoration: none;
-	color:white;
-}
-a:link {
-	text-decoration: none;
-	color:white;
-	
-}
-
-a:hover {
-	font-style: oblique;
-	text-decoration: underline;
-	font-weight: bolder;
-	color:white;
-}
-
-
-
-/*__________________general container __________________________________*/
-
-
-@media only screen and (max-width: 680px) {
-	@charset "utf-8";
-/* CSS Document */
-
-/*https://developer.mozilla.org/en-US/docs/Web/CSS/line-height*/
-
-		body
-		{
-			width: 100%;
-			/*____box-sizing:border-box;_____*/
-			border: 0%;
-			padding: 0%;
-			margin: 0%;
-			background-color:#AA1B14;
-		}
-		
-		/*__________________general container __________________________________*/
-
-
-		#container{
-			
-			
-			width: 85%;
-			padding:5% 5% 5% 5%;
-			margin:5% 1% 0% 3%;
-			
-			border-size:1px;
-			/*____box-sizing:border-box;background-color:#1f2F1F;_____*/
-			color:white;
-			opacity:0.9;
-			border-color: green;
-			
-		}
-		
-		/*__________________text___________________________________*/
-		
-		
-		#name{
-			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-			font-size:3.1em;
-			font-weight:bold;
-			word-break: normal;
-			word-wrap: normal;
-			word-spacing: normal;
-			line-height:1.1;
-		}
-
-		#intro_text{
-			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
-			font-size:1em;
-			font-weight:normal;
-			line-height:1.5;
-			text-align: left;
-			word-break: normal;
-			word-wrap: break-word;
-			word-spacing: normal;
-		}
-		
-		.link_btn{
-			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-			font-size:1.3em;
-			font-weight:normal;
-		}
-		
-		.subtitle_section{
-			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-			font-size:1.3em;
-			font-weight:bolder;
-		}
-
-		.intro_section{
-			font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
-			font-size:1em;
-			font-weight:normal;
-			line-height: 1.5;	
-		}
-		
-		p::first-line{
-			line-height: 1.5;
-		}
-		
-		p{
-			line-height: 1.5;	
-		}
-		
-		
-		/*___________________sections___________________________________*/
-		
-		.section{
-			border-radius:25px;
-			width:90%;
-			padding:5% 0% 5% 10%;
-			margin: 0% 0% 0% 0%;
-			/*_________background-color: #1f2F1F;__________________*/
-
-			float:none;
-		}
-		
-		
-		.box{
-			width: 90%;
-			margin: 5% 5% 2% 5%;
-			background-color: none;
-		}
-		
-		
-		.subtitle_section
-		{ 
-			width: 90%;
-			margin: 5% 5% 5% 5%;
-			border-style:solid;
-			border-width:1px 0px 1px 0px;
-			padding: 5% 0% 5% 0%;
-		}
-
-		.intro_section
-		{ 
-			width: 90%;
-			margin: 5% 5% 5% 5%;
-		}
-		
-		.link_btn
-		{ 
-			width: 90%;
-			margin: 5% 5% 5% 5%;
-		}
-			
-		#logo {
-			height:auto;
-			padding:0% 5% 5% 5%;
-			margin:5% 5% 0% 0%;
-		}
-				
-		#name{
-			/*____box-sizing:border-box;_____*/
-			color:white;
-			background-color: transparent;
-			border-width:1px 0px 0px 0px;
-			border-style: solid;
-			padding:5% 0% 0% 0%;
-			
-		}
-		
-		#intro_text{
-			color:white;
-			border-width:0px 0px 10px 0px;
-			border-style: solid;
-			margin:5% 0% 2% 5%;
-			padding:0% 0% 8% 0%;
-		}
-		
-		
-		
-		/*-----------------------------------------------*/
-		
-		#fli, #tmb {display:none;}
-		
-		/*------------------------------------*/
-		
-		
-		
-		
-		/*-------------canary------------------*/
-
-		.stylenumber{
-			position:fixed;
-			z-index:3;
-			font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
-			font-size:4em;
-			top:3%;
-			color:white;
-		}	
-		#dos, #tres, #uno {display:none;}
-		#cuatro{display:block}
-		
-		
-		/*___________________psection patches ___________________________________*/
-		
-		
-		/*-------------------------------*/
-		a:visited {
-		    text-decoration: none;
-			
-		}
-		a:link {
-			text-decoration: none;
-			color:white;
-		}
-		
-		a:hover {
-			font-style: oblique;
-			text-decoration: underline;
-			font-weight: bolder;
-			color:white;
-		}
-
-	
-}
-
-

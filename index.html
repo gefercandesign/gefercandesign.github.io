@@ -101,8 +101,7 @@
 					<div id="pm1" class="link_btn"> &gt; 004.social media </div> </a>
 				</div>
 			</div>
-			<img id="image_infographics" width="400vw" class="section" src="./images/design_gefercan_infographics_infarto.webp"/> 
-			<img id="image_infographics2" width="450vw" class="section"  src="./images/design_gefercan_infographic_sport_voley.webp"/> 			 
+			<img id="image_infographics" width="680vw" class="section" src="./images/design_gefercan_infographics_infarto.webp"/> 		 
 		</section>
 
 <!-----------------------illustration------------------------------->
@@ -122,8 +121,7 @@
 						<div id="opensea" alt="open sea" class="link_btn" > &gt; opensea</div></a>
 					</div>
 				</div>
-				<img id="image_illustration" width="400vw" class="section" src="./images/design_gefercan_infographics_infarto.webp"/>
-				<img id="image_illustration2" width="400vw" class="section" src="./images/design_gefercan_infographics_infarto.webp"/>
+				<img id="image_illustration1" width="700vw" class="section" src="./images/design_gefercan_illustration_tintin.webp"/>
 		</section>
 
 <!-------------------------ux ui------------>	
@@ -131,8 +129,8 @@
 
 				<h2 id="subtitle_section4" class="subtitle_section"> <b>003. UX/UI </b> </h2>
 				<div id="intro_text2" class="intro_section" alt="A brief intro about me, german fernandez cantos"  >
-    				Digital design and digital layouts for web and social media to show your content with visual appeal.
-				<br>	
+    					Digital design and digital layouts for web and social media to show your content with visual appeal.
+					<br>	
 					<div id="links_uxui">
 					<a href="https://gefercan2.github.io/poema_alter_1/index.html" target="_blank">
 						<div id="poem1" class="link_btn"> &gt; lasvideosesiones 01</div> </a>
@@ -141,8 +139,7 @@
 					</div>
 				</div>
 				
-				<div id="image_uxui" class="section" ></div>
-				<div id="image_uxui2" class="section" ></div>
+				<img id="image_uxui1" class="section" width="680vw" src="./images/design_gefercan_UXUI_portfolio_page2.webp"/>
 
 				</section> 
 			
@@ -152,18 +149,18 @@
 				<h2 id="subtitle_section5" class="subtitle_section">
 					<b>004. Editorial </b></h2>
 				<div id="intro_text5" class="intro_section" alt="A brief intro about me, german fernandez cantos"  >
-					Focused on print, customized books and report layouts.
+					Design that is focused on print, customized books and report. Page layouts and content structuring if necessary for the product to be reality.<br><br>
 					<div id="links_editorial">
 						<a href="https://gefercan.github.io/exercise_texts/onpainting.html" target="_blank">
-					<div id="git" alt="github 1" class="link_btn"> &gt; tres tristes tigres by C. Infante </div></a>
+						<div id="git" alt="github 1" class="link_btn"> &gt; tres tristes tigres by C. Infante </div></a>
 						<a href="https://gefercan.github.io/exercise_texts/800_words_max.html" target="_blank">
-					<div id="lenk2" alt="github 1" class="link_btn"> &gt; The limits of Interpretation by U.Eco </div></a>
+						<div id="lenk2" alt="github 1" class="link_btn"> &gt; The limits of Interpretation by U.Eco </div></a>
 						<a href="https://gefercan.github.io/exercise_texts/data_symbol.html" target="_blank">
-					<div id="lenk3" alt="github 1" class="link_btn"> &gt; Red by O. Pamuk </div></a>
+						<div id="lenk3" alt="github 1" class="link_btn"> &gt; Red by O. Pamuk </div></a>
+					</div>
 				</div>
-				<div id="image_editorial1" class="section" ></div>
-				<div id="image_editorial2" class="section" ></div>
-				</div>
+				<img id="image_editorial1" class="section" width="680vw" src="./images/design_gefercan_editorial_book_cover1.webp" />
+				
 
 		</section>
 
@@ -219,6 +216,8 @@
 <!--			<div id="thewidth" class="stylepantalla">width</div>
 			<div id="theheight" class="stylepantalla">height</div>-->
 
+
+
  <script>
 	gsap.registerPlugin(ScrollTrigger);
 
@@ -231,38 +230,75 @@
 			//	scrub:true;
 			toggleActions:"restart pause none pause"
 			},
-    			x: 900,
-			rotation:350,
+    			opacity:1,
 			duration :2
 			});
 
-	gsap.to("#image_infographics2", {
+	gsap.to("#image_illustration1", {
     			scrollTrigger: {
-			trigger:"#section2",
+			trigger:"#section3",
+			start:"top center",
+			end:"bottom 100px",
+			markers:true,
+			//scrub:true;
+			toggleActions:"restart pause none pause"
+			},
+    			opacity:1,
+			duration :3
+			});
+
+
+	gsap.to("#image_uxui1", {
+    			scrollTrigger: {
+			trigger:"#section4",
 			start:"top center",
 			end:"bottom 100px",
 			markers:true,
 			//	scrub:true;
 			toggleActions:"restart pause none pause"
 			},
-    			x: 500, y:340, opacity:1,
-			rotation:-20,
+    			opacity:1,
 			duration :3
 			});
 
 
+	gsap.to("#image_editorial1", {
+    			scrollTrigger: {
+			trigger:"#section5",
+			start:"top center",
+			end:"bottom 100px",
+			markers:true,
+			//	scrub:true;
+			toggleActions:"play  restart none none"
+			},
+    			opacity:1,
+			duration :3
+			});  
+</script>
 
-				
-	
+<script>
+    const images = [
+      "./images/design_gefercan_UXUI_portfolio_page2.webp",
+      "./images/design_gefercan_infographic_sport_voley.webp",
+      "./images/design_gefercan_illustration_tintin.webp",
+      "./images/design_gefercan_editorial_book_cover1.webp"
+    ];
 
+    let currentIndex = 0;
 
+    function changeBackground() {
+      const div = document.getElementById("section1");
+      div.style.backgroundImage = `url(${images[currentIndex]})`;
+      currentIndex = (currentIndex + 1) % images.length; // Loop back to start
+    }
 
-	gsap.fromTo( "#image_infographics", { opacity: 0 },{ opacity: 1 });
-	//gsap.fromTo( "#image_infographics2", { x: -1200 },{ x: 200 });
-	gsap.to("#image_illustration", { x: -1000 });
-	gsap.to("#image_illustration2", { x: 300 });
-   
+    // Change the background every 3000 milliseconds
+    setInterval(changeBackground, 3000);
+
+    // Initialize the first image
+    changeBackground();
   </script>
+
 
  
 

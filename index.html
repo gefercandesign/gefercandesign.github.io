@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,8 +33,7 @@
 <!--here comes the links for responsive css-->
 <link rel="stylesheet"  href="style_gefercan.css"  type="text/css">
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <link rel="canonical" href="https://gefercandesign.github.io"> 
@@ -49,7 +49,8 @@
 <body>
 
 	<!--------------------menu---------------------->
-		<svg id=button alt="button" src="./images/button1.svg"> </svg> 
+		<img  id="button1" alt="button" src="./images/button1.svg"> 
+		<a href="#section1" > <img id="goTop" alt="button" src="./images/button2.svg"> </a>
 
 		<div id=navheader>
 			<div id= webname class="subtitle_section"> german fernandez.design </div>
@@ -208,32 +209,8 @@
 			});
 
 
-	gsap.to("#image_uxui1", {
-    			scrollTrigger: {
-			trigger:"#section4",
-			start:"top center",
-			end:"bottom 100px",
-			markers:false,
-			//	scrub:true;
-			toggleActions:"restart pause none pause"
-			},
-    			opacity:1,
-			duration :3
-			});
 
 
-	gsap.to("#image_editorial1", {
-    			scrollTrigger: {
-			trigger:"#section5",
-			start:"top center",
-			end:"bottom 100px",
-			markers:false,
-			//	scrub:true;
-			toggleActions:"play  restart none none"
-			},
-    			opacity:1,
-			duration :3
-			});  
 </script>
 
 
@@ -377,6 +354,20 @@
 
 //https://gsap.com/docs/v3/Plugins/ScrollTrigger/?page=1
   </script>
+
+ <script>
+
+	document.getElementById("button1").addEventListener("click", () => {
+  	const sideMenu = document.getElementById("navheader");
+  	sideMenu.style.top = "10px";
+	});
+	document.getElementById("container").addEventListener("click", () => {
+ 	const sideMenu = document.getElementById("navheader");
+  	sideMenu.style.top = "-550px";
+	});
+
+
+</script>
 
 
 

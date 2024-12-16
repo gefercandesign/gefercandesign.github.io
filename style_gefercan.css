@@ -10,13 +10,37 @@
 		
 @media only screen and (max-width: 600px) {
 
-			body {width: 100%; margin: 5% 0% 0% 0%; opacity:1;}	
+			body {width: 100%; margin: 5% 0% 0% 0%; opacity:1;}
+
+						
+			#button1  { width:27%; max-height:9%; display:block; right:-5%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
+			#goTop  { width:27%; max-height:9%; display:block; right:-5%;bottom:5%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
+
+			.svg{display:block; width:auto;}
+
+			#navheader{
+		        	position:fixed;width:96%;height:50vh; padding:0% 0% 0% 0%; margin: 1% 1% 1% 1%; top:-100%;
+				top:-222%; z-index:3; opacity:1; border-radius:30px;border:none;
+				background-color:#0f0f0f;  box-shadow: 5px 10px 5px grey; }
+
+			#webname {grid-column:1/2; grid-row:1; padding:10% 5% 10% 5%; margin: 1% 0% 0% 2%; color:#9f9f9f;
+				border-radius:30px;border:none;border-color:black;
+				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
+				 }
+
+			#nav1,#nav2,#nav3,#nav4{
+				width:100%;color:white; padding:0% 5% 0% 5%; margin: 0% 0% 0% 2%; border-radius:30px; 
+				border:none; border-color:black; line-height:2.1;
+				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
+
+		 	}
+		
 
 			#container{ display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(30,1fr) ;max-height:770vh; margin:2% 0% 0% 0%; margin: 0% 5% 0% 5%;
 				    justify-items:center; column-gap:1%; row-gap:1%; opacity:0.9; border-radius:30px;border-style:solid;border-color:yellow;}
 
 			#section1{  grid-column:1/3; grid-row:1/7; padding:2%; max-height:270vh;
-			    	    background-color:#f5f5f7; background-position:50% 60%; background-repeat:no-repeat; background-size:100%; color:black; border:none;
+			    	    background-color:#f5f5f7; background-position:50% 75%; background-repeat:no-repeat; background-size:100%; color:black; border:none;
 			    	    display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(8,1fr); }
 
 			#logo {     height: auto; padding:1% 5% 0% 0%; 
@@ -52,7 +76,7 @@
 			    display:grid; grid-template-columns: repeat(1,1fr); grid-template-rows: repeat(8,1fr); column-gap:2%; 
 				}
 
-
+			
 			#subtitle_section2, #subtitle_section3 , #subtitle_section4, #subtitle_section5 {
 				 grid-column:1/3 ;grid-row:1/2; margin: 5% 5% 0% 5%;font-family:Gotham, 
 				"Helvetica Neue", Helvetica, Arial, "sans-serif"; }
@@ -63,13 +87,8 @@
 		 	#carousel_infographics, #carousel_illustration, #carousel_uxui,  #carousel_editorial {
       			    	grid-column:1 /3;
       			    	grid-row:2/ 6;
-      			    	background-size: 100%; background-size:100%; background-repeat:no-repeat; background-position: center; background-color: #f5f5f7; position: relative; padding:0%; }
-			
-			#button  { width:7%; max-height:9%; display:block; left:75%; padding:1% 5% 1% 5%; position:absolute; z-index:13; }
+      			    	background-size: 100%; background-size:100%; background-repeat:no-repeat; background-position: center; background-color: #f5f5f7; position: relative; 					padding:0%; }
 
-			.svg{display:block; width:auto;}
-
-			#navheader{ display:none; }
 			
 			.arrow { position: absolute; top: 100%; transform: translateY(-20%); background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 3em;
       			padding: 1px 20px 2px 20px;

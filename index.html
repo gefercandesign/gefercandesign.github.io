@@ -31,9 +31,7 @@
 
 <!--here comes the links for responsive css-->
 <link rel="stylesheet" media="(min-width: 1800px)" href="style_gefercan.css"  type="text/css">
-<link rel="stylesheet" media="(max-width: 1799px)" href="style_gefercan.css"  type="text/css">
-<link rel="stylesheet" media="(max-width: 1200px)" href="style_gefercan.css"  type="text/css">
-<link rel="stylesheet" media="(max-width: 680px)" href="style_gefercan.css"  type="text/css">
+<link rel="stylesheet" media="(max-width: 400px)" href="style_gefercan.css"  type="text/css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -48,13 +46,12 @@
 
 
 
-
-
 <body>
 
 	<!--------------------menu---------------------->
+		<img id=button alt="button" <svg src="./images/button1.svg"> </svg> 
+
 		<div id=navheader>
-			<img id=button alt="button"><svg src="/images/button1.svg"></svg>
 			<div id= webname class="subtitle_section"> german fernandez.design </div>
 
 			<div id=menu>
@@ -125,9 +122,7 @@
 					<div class="arrow left" id="prev"  onclick="previousImageuxui()""> &#8249; </div>
     					<div class="arrow right" id="next" onclick="nextImageuxui()"> &#8250; </div>
   				</div>
-
-
-				</section> 
+		</section> 
 			
 <!-------------------------editorial-------------------------->				
 		
@@ -142,15 +137,11 @@
     					<div class="arrow left" id="prevImage_editorial" onclick="previousImage_editorial()" > &#8249; </div>
     					<div class="arrow right" id="nextImage_editorial" onclick="nextImage_editorial()"> &#8250; </div>
       				</div>
-
-
 		</section>
 
 
 <!--------------------------------footer-------------------------------------------------->					
 		<section id="section6" class="section" alt="github" >
-
-			
 				<div id="intro_text6" class="intro_section" alt="A brief intro about me, german fernandez cantos"  >
 				<h2 id="subtitle_section6" class="subtitle_section">
 				<b>///About </b></h2>
@@ -187,7 +178,7 @@
 			</section>
 		</div>
 
-	<!--------------------canary---------------------->
+<!-------------------------canary---------------------->
 
 			<div id="uno" class="stylenumber">/01</div>
 			<div id="dos" class="stylenumber">/02</div>
@@ -196,6 +187,8 @@
 <!--			<div id="thewidth" class="stylepantalla">width</div>
 			<div id="theheight" class="stylepantalla">height</div>-->
 
+
+<!-------------------------scripts---------------------->
 
 
  <script>
@@ -359,7 +352,7 @@
     // List of images for the editorial gallery
     	const images_editorial= [ 
       		{ id: "blue_infographics", 	url: "./images/design_editorial_genderbalance1.webp" },
-      		{ id: "red_infographics",  	url: "./images/design_gefercan_editorial_book_cover2.webp" },
+      		{ id: "red_infographics",  	url: "./images/design_gefercan_editorial_book_cover1.webp" },
       		{ id: "orange_infographics", 	url: "./images/design_editorial_genderbalance2.webp" },
       		{ id: "purple_infographics", 	url: "./images/design_gefercan_editorial_book_cover2.webp" }
 	];
@@ -388,53 +381,6 @@
 
 
 
-
-
-	
-<!---------------------------------------------------
-					
-					<div id="links_infographics">
-						<a href="https://www.behance.net/gallery/202486881/UXUI-las-videosesiones-website#" target="_self">
-						<div id="general" class="link_btn"> &gt; 001.FIFA WorldCup </div></a>
-						<a href="https://www.behance.net/gallery/4842337/Information-Graphics-(1)k" target="_self">
-						<div id="comission" class="link_btn"> &gt;002.Libertadores Cup</div></a>
-						<a href="https://www.behance.net/gallery/26372397/Book-Cover-dancers#" target="_self">
-						<div id="pm1" class="link_btn"> &gt; 003.editorial design </div></a>
-						<a href="https://www.behance.net/gallery/169204305/Social-media-post-design-campaign#">
-						<div id="pm1" class="link_btn"> &gt; 004.social media </div> </a>
-					</div>
-
-
-					<div id="links_illustration">
-						<a href="https://www.fxhash.xyz/u/gefercan" target="_blank">
-						<div id="lnk" alt="german fernandez on linkedin" class="link_btn"> &gt; fx_hash</div></a>
-						<a href="https://teia.art/gefercan" target="_blank">
-						<div id="contact" alt="teiaz" class="link_btn" > &gt; teia art</div></a>
-						<a href="https://foundation.app/@gefercan" target="_blank">
-						<div id="teia" alt="teiaz" class="link_btn" > &gt; foundation</div></a>
-						<a href="https://opensea.io/gefercan" target="_blank">
-						<div id="opensea" alt="open sea" class="link_btn" > &gt; opensea</div></a>
-					</div>
-
-					<div id="links_editorial">
-						<a href="https://gefercan.github.io/exercise_texts/onpainting.html" target="_blank">
-						<div id="git" alt="github 1" class="link_btn"> &gt; tres tristes tigres by C. Infante </div></a>
-						<a href="https://gefercan.github.io/exercise_texts/800_words_max.html" target="_blank">
-						<div id="lenk2" alt="github 1" class="link_btn"> &gt; The limits of Interpretation by U.Eco </div></a>
-						<a href="https://gefercan.github.io/exercise_texts/data_symbol.html" target="_blank">
-						<div id="lenk3" alt="github 1" class="link_btn"> &gt; Red by O. Pamuk </div></a>
-					</div>
-			
-					<div id="links_uxui">
-					<a href="https://gefercan2.github.io/poema_alter_1/index.html" target="_blank">
-						<div id="poem1" class="link_btn"> &gt; lasvideosesiones 01</div> </a>
-					<a href="https://gefercan2.github.io/poema_alter_2/index.html" target="_blank">
-						<div id="poem2" class="link_btn"> &gt; social media</div> </a>
-					</div>
-
-
----------------------------------------------------->
- 
 
 
 </body>

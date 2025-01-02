@@ -140,6 +140,34 @@ window.onload= function(){
 
 
 		function sidemenu(){
+			document.getElementById("button1").addEventListener("click", showMenu);
+			document.getElementById("nav12").addEventListener("click", hideMenu);
+			document.getElementById("nav22").addEventListener("click", hideMenu);
+			document.getElementById("nav32").addEventListener("click", hideMenu);
+			document.getElementById("nav42").addEventListener("click", hideMenu);
+	
+			function showMenu(){
+				const sideMenu = document.getElementById("navheader2");
+				sideMenu.style.top = "10px";
+				sideMenu.style.width= "95%";
+				document.getElementById("button1").addEventListener("click",hideMenu);
+				document.getElementById("button1").removeEventListener("click",showMenu);
+				document.getElementById("button1").style.transform = "rotate(90deg)";
+			}
+
+			function hideMenu(){
+				const sideMenu = document.getElementById("navheader2");
+				sideMenu.style.top = "-750px";
+				sideMenu.style.width= "10%";
+				document.getElementById("button1").addEventListener("click",showMenu);
+				document.getElementById("button1").removeEventListener("click",hideMenu);
+				document.getElementById("button1").style.transform = "rotate(-1260deg)";
+			}
+
+		}
+
+
+/* 		function sidemenu(){
 			
 			document.getElementById("button1").addEventListener("click", () => {
   			const sideMenu = document.getElementById("navheader2");
@@ -150,7 +178,7 @@ window.onload= function(){
   			sideMenu.style.top = "-550px";
 			});
 		}
-
+ */
 
 
 		header_banner();

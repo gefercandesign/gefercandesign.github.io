@@ -13,46 +13,44 @@
 			body {width: 100%; margin: 5% 0% 0% 0%; opacity:1;}
 
 						
-			#button1  { width:27%; max-height:9%; display:block; right:-5%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
-			#goTop  { width:27%; max-height:9%; display:block; right:-5%;bottom:5%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
-
+			#button1  { width:27%; max-height:9%; display:block; right:-5%; top:1%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
+			#goTop  { width:27%; max-height:9%; display:block; right:-5%; bottom:1%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
 			.svg{display:block; width:auto;}
-
 			#navheader{display:none;}
 			#navheader2{
-		        	position:fixed;width:96%;height:50vh; padding:0% 0% 0% 0%; margin: 1% 1% 1% 1%; top:-100%;
+		        position:fixed;width:96%;height:50vh; padding:20% 0% 0% 0%; margin: 1% 1% 1% 1%; top:-100%;
 				top:-222%; z-index:3; opacity:1; border-radius:30px;border:none;
 				background-color:#0f0f0f;  box-shadow: 5px 10px 5px grey; }
-
 			#webname {grid-column:1/2; grid-row:1; padding:10% 5% 10% 5%; margin: 1% 0% 0% 2%; color:#9f9f9f;
 				border-radius:30px;border:none;border-color:black;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
 				 }
-
-			#nav1,#nav2,#nav3,#nav4{
+			#nav12,#nav22,#nav32,#nav42{
 				width:100%;color:white; padding:0% 5% 0% 5%; margin: 0% 0% 0% 2%; border-radius:30px; 
 				border:none; border-color:black; line-height:2.1;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
-
+		 	}
+			#nav1,#nav2,#nav3,#nav4{
+				display:none;
 		 	}
 		
 
 			#container{ display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(30,1fr) ;max-height:770vh; margin:2% 0% 0% 0%; margin: 0% 5% 0% 5%;
 				    justify-items:center; column-gap:1%; row-gap:1%; opacity:0.9; border-radius:30px;border-style:solid;border-color:yellow;}
 
-			#section1{  grid-column:1/3; grid-row:1/7; padding:2%; max-height:270vh;
-			    	    background-color:#f5f5f7; background-position:50% 75%; background-repeat:no-repeat; background-size:100%; color:black; border:none;
+			#section1{  grid-column:1/3; grid-row:1/6; padding:1%; max-height:270vh;
+			    	    background-color:#f5f5f7; background-position:1% 75%; background-repeat:no-repeat; background-size:100%; color:black; border:none;
 			    	    display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(8,1fr); }
 
 			#logo {     height: auto; padding:1% 5% 0% 0%; 
 				    margin:2% 5% 0% 0%; grid-column: 1; grid-row:1; }
 
-			#name    {  font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
+			#name    {  font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2.8em; font-weight:bold;
 				    word-break: normal; word-wrap: normal; word-spacing:normal; color:white; display:grid;
 				    border-width: 1px 0px 0px 0px; border-style: solid; padding: 5% 0% 1% 0%; margin: 5% 0% 0% 0%;
 				    color:black; grid-column: 1/3; grid-row:2/3; }
 
-			#intro_text{ font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; font-size:1em; font-weight:normal;
+			#intro_text{ font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; font-size:1.1em; font-weight:normal;
 				    line-height: 1.3; text-align: left;
 				    word-break: normal; word-wrap: break-word; word-spacing: normal;
 				    border:none; border-style: solid; border-width:0px 0px 40px 0px;
@@ -79,19 +77,19 @@
 
 			
 			#subtitle_section2, #subtitle_section3 , #subtitle_section4, #subtitle_section5 {
-				 grid-column:1/3 ;grid-row:1/2; margin: 5% 5% 0% 5%;font-family:Gotham, 
+				 grid-column:1/3 ;grid-row:5/6; margin: 0% 5% 0% 5%;font-family:Gotham, 
 				"Helvetica Neue", Helvetica, Arial, "sans-serif"; }
 			#intro_text2,#intro_text3,#intro_text4,#intro_text5 {
-				grid-column: 1/3; grid-row:7/8; 
+				grid-column: 1/3; grid-row:6/8; 
 				margin: 0% 5% 0% 5%; font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; font-weight:normal;}
 
 		 	#carousel_infographics, #carousel_illustration, #carousel_uxui,  #carousel_editorial {
       			    	grid-column:1 /3;
-      			    	grid-row:2/ 6;
+      			    	grid-row:1/ 5;
       			    	background-size: 100%; background-size:100%; background-repeat:no-repeat; background-position: center; background-color: #f5f5f7; position: relative; 					padding:0%; }
 
 			
-			.arrow { position: absolute; top: 100%; transform: translateY(-20%); background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 3em;
+			.arrow { position: absolute; top: 80%; transform: translateY(-20%); background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 3em;
       			padding: 1px 20px 2px 20px;
       			cursor: pointer;
       			z-index: 10;border-radius:30px;
@@ -112,6 +110,14 @@
 		
 			}
 			
+
+
+
+
+
+
+
+
 
 
 @media only screen and (min-width: 1700px) and (min-width: 601px)  {
@@ -186,7 +192,7 @@
 			    display:grid; grid-template-columns: repeat(5,1fr); grid-template-rows: repeat(3,1fr); 
 			}
 			#section6{  background-color:#e7e6e6;
-			    grid-column:2/12; grid-row:8/11;padding:2%; display:grid; grid-template-columns: repeat(12,1fr);grid-template-rows: repeat(3,1fr); 
+			    grid-column:2/12; grid-row:9/11;padding:2%; display:grid; grid-template-columns: repeat(12,1fr);grid-template-rows: repeat(3,1fr); 
 			}
 
 			#subtitle_section2{grid-column:1;grid-row:1;}
@@ -210,10 +216,9 @@
 			#image_editorial1 {position:absolute; left:50%; top:340%; opacity:0.1; border:none; border-radius:0px; padding:0% 0% 0% 0%; margin:0px;}
 				
 			#subtitle_section6{grid-column:1;grid-row:1;}
-			#intro_text6 {grid-column:1/3;grid-row:1/3;}
-			#social_media{grid-column:4;grid-row:1/3;}
-			#contributions{grid-column:6;grid-row:1/3;}
-			#references{grid-column:8;grid-row:1/2;}
+			#intro_text6 {display:grid; grid-column:1/12;grid-row:1/3;grid-template-columns: 1/6; grid-template-rows:1/3;} 
+			#subtitle_section6{grid-column:3/6; grid-row:1/2;}
+			#texto_footer{grid-column:3/6; grid-row:2/3;}
 
 			#menu {grid-column:2/6;grid-row:1;
 		 	float:left;

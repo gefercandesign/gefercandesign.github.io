@@ -170,7 +170,7 @@
 
 			.section{
 			padding:5%;margin: 0% 1%;color:#a8a8a8;
-			border-radius:30px;border-style:solid;border-width:1px;border-color:#dcdcdc;
+			border-radius:30px;border-style:solid;border-width:1px;border-color:white;
 			}
 
 			#section1{  grid-column:2/12; grid-row:1/4; padding:2%; 

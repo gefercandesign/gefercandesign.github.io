@@ -86,15 +86,15 @@
       			    	background-size: 100%; background-size:100%; background-repeat:no-repeat; background-position: center; background-color: #f5f5f7; position: relative; 					padding:0%; }
 
 			
-			.arrow { position: absolute; top: 80%; transform: translateY(-20%); background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 3em;
+			.arrow { position: absolute; top: 80%; transform: translateY(-20%);  font-size: 3em;
       			padding: 1px 20px 2px 20px;
       			cursor: pointer;
       			z-index: 10;border-radius:30px;
+			background-color: rgba(255, 255, 255, 0.5); color: black;
     			}
 
    		 	.arrow:hover {
-      			background-color: rgba(255, 255, 255, 0.5);
-      			color: black;
+      			background-color: rgba(5, 5, 5, 0.5); color: white;
     			}
 
     			.left {

@@ -1,7 +1,7 @@
 # gefercandesign.github.io
 Portfolio of design works<br>
 Here I show my works in graphic design.<br>
-Welcome. I am Geman Fernandez Cantos, a Peruvian artist and designer who works mainly in the field of information design (infographics, ux/ui) and illustration (digital and analogue) and editorial design (books, reports). This is my portfolio website.<br> 
+Welcome. I am German Fernandez Cantos, a Peruvian artist and designer who works mainly in the field of information design (infographics, ux/ui) and illustration (digital and analogue) and editorial design (books, reports). This is my portfolio website.<br> 
 
 001. Infographics<br>
 Complex information communicated through visual display. From visual storytelling to statistical charts, we craft a tailored approach to develope a clear message. <br>

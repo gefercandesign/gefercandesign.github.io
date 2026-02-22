@@ -119,7 +119,8 @@
 
 @media only screen and (max-width: 799px) and (min-width: 601px)  {
 
-			body {width: 100%; margin: 5% 0% 0% 0%; opacity:1; background-color:#f5f5f7}
+			body {width: 100%; margin: 5% 0% 0% 0%; opacity:1; background-color:#f5f5f7
+			}
 			.arrow { position: absolute; top: 80%; transform: translateY(-20%);  font-size: 3em; padding: 1px 20px 2px 20px;
       			cursor: pointer; z-index: 10;border-radius:30px;background-color: rgba(255, 255, 255, 0.5); color: black;
     			}
@@ -156,7 +157,7 @@
 				display:none;
 		 	}
 		
-			#container{ display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(23,1fr) ;max-height:580vh; margin: 10% 5% 5% 5%;
+			#container{ display:grid; grid-template-columns: repeat(1,1fr); grid-template-rows: repeat(23,1fr) ;max-height:580vh; margin: 10% 5% 5% 5%;
 				    	justify-items:center; column-gap:1%; row-gap:1%; opacity:0.9; border-radius:30px;border-style:solid;border-color:white;}
 
 			#logo {     height: auto; padding:1% 5% 0% 0%; 
@@ -244,7 +245,7 @@
 			.svg{display:block; width:auto;}
 			#navheader{display:none;}
 			#navheader2{
-		        position:fixed;width:96%;height:50vh; padding:20% 0% 0% 0%; margin: 1% 1% 1% 1%; top:-100%;
+		        	position:fixed;width:96%;height:50vh; padding:20% 0% 0% 0%; margin: 1% 1% 1% 1%; top:-100%;
 				top:-222%; z-index:3; opacity:1; border-radius:30px;border:none;
 				background-color:#0f0f0f;  box-shadow: 5px 10px 5px grey; }
 			#webname {grid-column:1/2; grid-row:1; padding:10% 5% 10% 5%; margin: 1% 0% 0% 2%; color:#9f9f9f;
@@ -260,30 +261,27 @@
 				display:none;
 		 	}
 		
-			#container{ display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(23,1fr) ;max-height:580vh; margin: 10% 5% 5% 5%;
-				    	justify-items:center; column-gap:1%; row-gap:1%; opacity:0.9; border-radius:30px;border-style:solid;border-color:white;}
+			#container{ display:grid; grid-template-columns: repeat(1,1fr); grid-template-rows: repeat(23,1fr) ;max-height:580vh; margin: 10% 5% 5% 5%;
+				    justify-items:center; column-gap:1%; row-gap:1%; opacity:0.9; border-radius:30px;border-style:solid;border-color:white;}
 
-			#section1{  grid-column:1/3; grid-row:1/6; padding:1%; max-height:270vh;
-			    	    background-color:#f5f5f7; background-position:1% 75%; background-repeat:no-repeat; background-size:100%; color:black; border:none;
-			    	    display:grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(8,1fr); }
-
+			
 			#logo {     height: auto; padding:1% 5% 0% 0%; 
-				    	margin:2% 5% 0% 0%; grid-column: 1; grid-row:1; }
+				    margin:2% 5% 0% 0%; grid-column: 1; grid-row:1; }
 
-			#name    {  font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2.6em; font-weight:bold;
-				   	 	word-break: normal; word-wrap: normal; word-spacing:normal; color:white; display:grid;
-				    	border-width: 1px 0px 0px 0px; border-style: solid; padding: 5% 0% 1% 0%; margin: 5% 0% 0% 0%;
-				    	color:black; grid-column: 1/3; grid-row:2/3; }
+			#name {  font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2.6em; font-weight:bold;
+				 word-break: normal; word-wrap: normal; word-spacing:normal; color:white; display:grid;
+				    border-width: 1px 0px 0px 0px; border-style: solid; padding: 5% 0% 1% 0%; margin: 5% 0% 0% 0%;
+				    color:black; grid-column: 1/3; grid-row:2/3; }
 
 			#intro_text{ font-family:Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; font-size:1.1em; font-weight:normal;
-				    	line-height: 1.3; text-align: left;
-				    	word-break: normal; word-wrap: break-word; word-spacing: normal;
-				    	border:none; border-style: solid; border-width:0px 0px 40px 0px;
-				    	padding:1% 0% 3% 0%;margin: 1% 0% 1% 0%;
-				    	grid-column: 1/3; grid-row:3/4;}
+				     line-height: 1.3; text-align: left;
+				     word-break: normal; word-wrap: break-word; word-spacing: normal;
+				     border:none; border-style: solid; border-width:0px 0px 40px 0px;
+				     padding:4% 0% 3% 0%;margin: 1% 0% 1% 0%;
+				     grid-column: 1/3; grid-row:3/4;}
 			
-			#carousel_infographics, #carousel_illustration,#carousel_uxui,  #carousel_editorial {
-      			grid-column:2 /6;
+				#carousel_infographics, #carousel_illustration,#carousel_uxui,  #carousel_editorial {
+      			grid-column:1 /6;
       			grid-row: 1 / 4;
       			display: flex;
       			align-items: center;
@@ -295,6 +293,9 @@
       			background-color: #f5f5f7;
       			position: relative;padding:0%;
    		 	}
+			
+		
+			
 
 	
 }

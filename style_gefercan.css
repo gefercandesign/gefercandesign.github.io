@@ -9,7 +9,7 @@
 
 
 
-		
+/* mobile */		
 @media only screen and (max-width: 600px) and (min-width: 301px) {
 			body {width: 100%; margin: 5% 0% 0% 0%; opacity:1; background-color:#f5f5f7}			
 			#button1  { width:27%; max-height:9%; display:block; right:-5%; top:1%; padding:1% 5% 1% 5%; position:fixed; z-index:13; }
@@ -28,7 +28,7 @@
 				border:none; border-color:black; line-height:2.1;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
 		 	}
-			#nav1,#nav2,#nav3,#nav4, #uno, #dos, #tres, #cuatro{
+			#nav1,#nav2,#nav3,#nav4,#uno, #dos, #tres, #cuatro{
 				display:none;
 		 	}
 		
@@ -288,7 +288,7 @@
       			justify-content: center;
       			background-image: url('https://via.placeholder.com/1920x1080?text=Image+1');
       			background-size: 80%;
-			background-repeat: no-repeat;
+				background-repeat: no-repeat;
       			background-position: center;
       			background-color: #f5f5f7;
       			position: relative;padding:0%;
@@ -302,7 +302,7 @@
 
 
 
-/*-------------------------------------------------------------------------------------------------*/
+/*----------------desktop ---------------------------------------------------------------------------------*/
 
 
 
@@ -431,7 +431,7 @@
 			grid-column:1/13; grid-row:11/12;
 			}
 
-	    		#carousel_infographics, #carousel_illustration,#carousel_uxui,  #carousel_editorial {
+	    	#carousel_infographics, #carousel_illustration,#carousel_uxui,  #carousel_editorial {
       			grid-column:2 /6;
       			grid-row: 1 / 4;
       			display: flex;
@@ -439,7 +439,7 @@
       			justify-content: center;
       			background-image: url('https://via.placeholder.com/1920x1080?text=Image+1');
       			background-size: 80%;
-			background-repeat: no-repeat;
+			    background-repeat: no-repeat;
       			background-position: center;
       			background-color: #f5f5f7;
       			position: relative;padding:0%;

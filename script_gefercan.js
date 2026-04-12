@@ -139,13 +139,15 @@ window.onload= function(){
 		}
 
 
+
+		// menu
+
 		function sidemenu(){
 			document.getElementById("button1").addEventListener("click", showMenu);
 			document.getElementById("nav12").addEventListener("click", hideMenu);
 			document.getElementById("nav22").addEventListener("click", hideMenu);
 			document.getElementById("nav32").addEventListener("click", hideMenu);
 			document.getElementById("nav42").addEventListener("click", hideMenu);
-			document.getElementById("nav45").addEventListener("click", hideMenu);
 	
 			function showMenu(){
 				const sideMenu = document.getElementById("navheader2");

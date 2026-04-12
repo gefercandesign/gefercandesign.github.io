@@ -145,6 +145,7 @@ window.onload= function(){
 			document.getElementById("nav22").addEventListener("click", hideMenu);
 			document.getElementById("nav32").addEventListener("click", hideMenu);
 			document.getElementById("nav42").addEventListener("click", hideMenu);
+			document.getElementById("nav45").addEventListener("click", hideMenu);
 	
 			function showMenu(){
 				const sideMenu = document.getElementById("navheader2");

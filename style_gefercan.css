@@ -23,7 +23,7 @@
 				border-radius:30px;border:none;border-color:black;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
 				 }
-			#nav12,#nav22,#nav32,#nav42,#nav45{
+			#nav12,#nav22,#nav32,#nav42 {
 				width:100%;color:white; padding:0% 5% 0% 5%; margin: 0% 0% 0% 2%; border-radius:30px; 
 				border:none; border-color:black; line-height:2.1;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
@@ -148,7 +148,7 @@
 				border-radius:30px;border:none;border-color:black;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;
 				 }
-			#nav12,#nav22,#nav32,#nav42, #nav45{
+			#nav12,#nav22,#nav32,#nav42 {
 				width:100%;color:white; padding:0% 5% 0% 5%; margin: 0% 0% 0% 2%; border-radius:30px; 
 				border:none; border-color:black; line-height:2.1;
 				font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:2em; font-weight:bold;

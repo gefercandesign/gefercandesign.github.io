@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title> design gefercan </title>
+<title>Bento Layout</title>
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -209,9 +209,11 @@ body {
 <!-- SIDE MENU -->
 <div class="side-menu" id="sideMenu">
   <ul>
-    <li><a href="#section-a" onclick="toggleMenu()">Section A</a></li>
-    <li><a href="#section-b" onclick="toggleMenu()">Section B</a></li>
-    <li><a href="#section-c" onclick="toggleMenu()">Section C</a></li>
+      <li><a href="#section-a"> Infographics </a></li>
+      <li><a href="#section-b"> Editorial</a></li>
+      <li><a href="#section-c"> Illustration </a></li>
+      <li><a href="#section-d"> UX/UI </a></li>
+      <li><a href="#section-e"> about </a></li>
   </ul>
 </div>
 
@@ -222,6 +224,9 @@ body {
     <p class="hero-sub"> German Fernandez <br> Portfolio </p>
   </div>
 </section>
+
+
+
 
 <!-- SECTION A (1 box carousel) -->
 <section id="section-a" class="section fade">
@@ -243,11 +248,13 @@ body {
         </div>
         <button id="infog_prev"class="prev" onclick="move(1,-1)">←</button>
         <button id="infog_next"class="next" onclick="move(1,1)">→</button>
-        <div class="counter" id="count-1">1 / 3</div>
+        <div class="counter" id="count-1"> 1 / 3</div>
       </div>
     </div>
   </div>
 </section>
+
+
 
 
 <!-- SECTION B (2 boxes) -->
@@ -276,6 +283,9 @@ body {
   </div>
 </section>
 
+
+
+
 <!-- SECTION C (2 boxes) -->
 <section id="section-c" class="section fade">
   <div class="section-header">
@@ -302,6 +312,8 @@ body {
   </div>
 </section>
 
+
+
 <!-- SECTION D (2 boxes) -->
 <section id="section-d" class="section fade">
   <div class="section-header">
@@ -326,6 +338,9 @@ body {
   </div>
 </section>
 
+
+
+
 <!-- SECTION E (2 boxes) -->
 <section id="section-e" class="section fade">
   <div class="section-header">
@@ -334,9 +349,7 @@ body {
       I am also an illustrator who works digitaly and analogically. This is the site for commercial design-related works. You can also see my work on 
       behance For personal projects, visit gefercan.github.io including paintings and coding works. For contact and communication, cv references, etc, 
       please do not hesitate to send a message and write to design.gefercan@outlook.com. All rights reserved.
-The purpose of this site is to promote our design services. The security of your Personal Information is important to us, but remember that no method 
-of transmission over the Internet, or method of electronic storage, is 100% secure. While we strive to use commercially acceptable means to protect 
-your personal information, we cannot guarantee its absolute security. This site is made on github..</p>
+</p>
   </div>
 
   <div class="bento one">
@@ -351,7 +364,9 @@ your personal information, we cannot guarantee its absolute security. This site 
 <section id="section-c" class="section fade">
   <div class="section-header">
     <h2 class="section-title">Section C</h2>
-    <p class="section-text">Triptych-like arrangement across equal modules.</p>
+    <p class="section-text">The purpose of this site is to promote our design services. The security of your Personal Information is important to us, but remember that no method 
+of transmission over the Internet, or method of electronic storage, is 100% secure. While we strive to use commercially acceptable means to protect 
+your personal information, we cannot guarantee its absolute security. This site is made on github..</p>
   </div>
 
   <div class="bento three">
@@ -366,7 +381,7 @@ your personal information, we cannot guarantee its absolute security. This site 
 
 <script>
 const state = {1:0};
-const totals = {1:3};
+const totals = {1:4};
 
 function move(id, step){
   let i = state[id] + step;
@@ -393,6 +408,7 @@ const obs = new IntersectionObserver(entries => {
 },{ threshold:0.2 });
 
  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
 </script>
 
 </body>

@@ -132,13 +132,13 @@ body {
 
 /* HERO */
 .hero { height:100vh; display:flex; align-items:center; justify-content:left; position:relative; }
-.hero img { position:absolute; width:50%; height:auto; left:40%; object-fit:cover; }
+.hero img { position:absolute; width:50%; height:auto; left:40%; object-fit:cover; padding:5%; height:auto; }
 .hero-content { position:relative; text-align:left; color:black; padding-left:25%;}
 
 .hero-title { font-size:6em; text-align: left; padding-left:30%; }
 .hero-sub { opacity:0.8; margin-top:10px; text-align: left; padding-left:20%;}
 
-
+#hero-title{ font-size:4em; text-align:left; line-height:1; }
 
 /* SECTIONS */
 .section { padding:140px 40px 120px 40px; }
@@ -152,7 +152,9 @@ body {
 .section-title { font-size:2rem; margin-bottom:12px; text-align: left; }
 .section-text { opacity:0.65; line-height:1.6;  text-align: left; }
 
-
+#intro_text{
+ width:20%;
+}
 
 
 
@@ -208,6 +210,7 @@ body {
   display:block;
 }
 
+
 .nav {
   position: fixed;
   top:0;
@@ -247,11 +250,16 @@ body {
 }
 
 .hero-title { font-size:3rem; text-align: left; padding-left:10%;}
-
+#hero-title{ font-size:3.5em; text-align:left; line-height:1;padding-top:40%; }
+.hero img { position:absolute; width:100%; height:auto; top:5%; left:4%; object-fit:cover; padding:2%;  }
 .hero-sub { opacity:0.8; font-size:2rem; margin-top:10px; text-align: left; padding-left:10%;}
-
+.hero-content { position:relative; text-align:left; color:black; padding-top:40%; padding-left:10%;}
 .section-title { font-size:2rem; margin-bottom:12px; text-align: left;}
 .section-text { opacity:0.65; line-height:1.6; text-align: left; }
+
+#intro_text{
+ width:70%;
+}
 
 #sideMenu{
   display:block;
@@ -298,11 +306,11 @@ body {
 </div>
 
 <section class="hero">
-   <img id="hero-img" src="./images/design_gefercan_dataviz_01_portfolio_page2.webp"  style="padding:5% style="width:500px;height:auto;" />
+   <img id="hero-img" src="./images/design_gefercan_dataviz_01_portfolio_page2.webp"  />
   <div class="hero-content fade">
-    <h1 id="hero-title" style="font-size:4em; text-align:left; line-height:1;"> infographics.<br>illustration.<br>design</h1>
+    <h1 id="hero-title"> infographics.<br>illustration.<br>design</h1>
     <p id="hero-sub" style="font-size:1.5em; text-align:left;"> <br> german fernandez portfolio </p>
-	<p style="width:20%"> <br> Welcome. I am German Fernandez Cantos, a Peruvian artist and designer who works mainly in the field of information design (infographics, ux/ui) and illustration (digital and analogue) and editorial design (books, reports). This is my portfolio website./ </p>
+	<p  id="intro_text"> <br> Welcome. I am German Fernandez Cantos, a Peruvian artist and designer who works mainly in the field of information design (infographics, ux/ui) and illustration (digital and analogue) and editorial design (books, reports). This is my portfolio website./ </p>
   </div>
 </section>
 

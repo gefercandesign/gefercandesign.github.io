@@ -466,7 +466,7 @@ const heroImages = [
   "./images/design_gefercan_dataviz_02_portfolio_page2.webp",
    "./images/design_gefercan_editorial_book_cover2.webp"
 ];
-
+//initial state
 let heroIndex = 0;
 
 function changeHero(){
@@ -484,9 +484,10 @@ function changeHero(){
 setInterval(changeHero, 3000);
 
 
-
+//initial image
 const state = {1:0, 2:0, 3:0, 4:0};
-const totals = {1:3, 2:4, 3:4, 4:4};
+//number of slides
+const totals = {1:3, 2:4, 3:4, 4:5};
 
 function move(id, step){
   let i = state[id] + step;

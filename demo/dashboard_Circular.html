@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Concentric Text Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,500;1,9..144,200&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#08080e;--s1:#0f0f18;--b1:rgba(255,255,255,.06);--b2:rgba(255,255,255,.11);--b3:rgba(255,255,255,.18);
+  --t1:#eae8e2;--t2:#8c8a84;--t3:#4e4c48;--t4:#2e2c2a;
+  --gold:#c8a96e;--gold2:#e2c48a;--teal:#7eb8c9;--violet:#9b7fc7;--rose:#c97e7e;--sage:#7ec99b;
+  --r:9px;--pw:290px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:
+hidden;background:var(--bg);color:var(--t1);font-family:'DM Mono',monospace}
+
+/* ── CHART LAYER ── */
+#layer-chart{position:fixed;inset:0;z-index:1;overflow:hidden}
+#chart-svg{display:block;width:100%;height:100%;cursor:grab}
+#chart-svg.panning{cursor:grabbing}
+
+/* ── UI LAYER ── */
+#layer-ui{position:fixed;inset:0;z-index:10;pointer-events:none}
+#layer-ui>*{pointer-events:all}
+
+/* ════════════════════
+   PANELS
+════════════════════ */
+.panel{
+  position:absolute;
+  background:rgba(31, 31, 46, 0.88);
+  border:0.5px solid var(--b2);
+  border-radius:var(--r);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  user-select:none;
+  transition:box-shadow .2s,background .2s,backdrop-filter .2s;
+}
+/* Extra blur when hovering over chart area */
+.panel.over-chart{
+  background:rgba(8,8,16,.95);
+  backdrop-filter:blur(36px);
+  -webkit-backdrop-filter:blur(36px);
+  box-shadow:0 8px 48px rgba(0,0,0,.75);
+}
+.drag-handle{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 24px;cursor:grab;border-radius:var(--r) var(--r) 0 0;
+  border-bottom:0.5px solid transparent;transition:border-color .25s;
+}
+.drag-handle:active{cursor:grabbing}
+.drag-handle.hopen{border-color:var(--b1)}
+.tog{display:flex;align-items:center;gap:7px;cursor:pointer;flex:1;min-width:10}
+.panel-title{font-size:.8em;letter-spacing:.13em;text-transform:uppercase;font-weight:500}
+.cg{font-size:29px;color:var(--t3);transition:transform .3s;display:inline-block;flex-shrink:0}
+.cg.open{transform:rotate(180deg)}
+.panel-body{overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s}
+.panel-body.open{opacity:1}
+.panel-inner{padding:13px 14px;display:flex;flex-direction:column;gap:10px}
+.sep{height:0.5px;background:var(--b2);margin:2px 0}
+
+/* colour classes */
+.c-gold{color:var(--gold)}.c-teal{color:var(--teal)}.c-violet{color:var(--violet)}
+.c-rose{color:var(--rose)}.c-sage{color:var(--sage)}.c-t2{color:var(--t2)}.c-t3{color:var(--t3)}
+
+/* ── INGEST PANEL ── */
+#upload-panel{top:5%;left:5%;width:var(--pw)}
+#drop-zone{border:0.5px dashed rgba(200,169,110,.35);border-radius:7px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;background:var(--b1)}
+#drop-zone:hover,#drop-zone.dz-over{background:var(--b3);border-color:var(--b3)}
+.dz-icon{font-size:18px;opacity:.4;margin-bottom:4px}
+.dz-label{font-size:10px;color:var(--t1);letter-spacing:.06em}
+.dz-sub{font-size:9px;color:var(--t3);margin-top:2px}
+#file-input{display:none}
+.prog-wrap{display:none;flex-direction:column;gap:5px}
+.prog-label{font-size:9px;color:var(--t2)}
+.prog-track{height:2px;background:var(--b2);border-radius:1px;overflow:hidden}
+.prog-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--teal));transition:width .08s linear}
+#files-list{display:flex;flex-direction:column;gap:4px}
+.fi{display:flex;align-items:center;gap:7px;font-size:9px;color:var(--t2);padding:5px 8px;background:var(--b1);border-radius:5px;transition:background .15s}
+.fi:hover{background:var(--b2)}
+.fi-dot{width:5px;height:5px;border-radius:50%;background:var(--sage);flex-shrink:0}
+.fi-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi-size{color:var(--t3);font-size:8px}
+.fi-rm{color:var(--t4);cursor:pointer;font-size:13px;line-height:1;padding:0 2px;transition:color .15s}
+.fi-rm:hover{color:var(--rose)}
+#corpus-stats{display:none;flex-direction:column;gap:3px}
+.stat-row{display:flex;justify-content:space-between;font-size:9px}
+.stat-k{color:var(--t3);text-transform:uppercase;letter-spacing:.05em}
+.stat-v{color:var(--t1)}
+#reset-corpus{display:none;width:100%;padding:7px;background:rgba(201,126,126,.08);border:0.5px solid rgba(201,126,126,.25);border-radius:6px;color:var(--rose);font-family:'DM Mono',monospace;font-size:9px;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
+#reset-corpus:hover{background:rgba(201,126,126,.18);border-color:rgba(201,126,126,.55)}
+#paste-area{width:100%;background:var(--b1); border:0.5px solid var(--b2);border-radius:6px;color:var(--t1);font-family:'DM Mono',monospace;font-size:9px;padding:7px;resize:vertical;outline:none;letter-spacing:.03em;line-height:1.6;min-height:50px}
+#paste-area:focus{border-color:var(--b3)}
+#step-conn{display:none;flex-direction:column;align-items:center;padding:2px 0;pointer-events:none; position:absolute; left:-9%; top:2%;}
+.sc-line{width:1px;height:64px;background:linear-gradient(to bottom,var(--b1),var(--b2))}
+.sc-node{width:15px;height:15px;border-radius:50%;border:0.5px solid var(--violet);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--violet);transition:all .3s}
+.sc-node.active{border-color:var(--teal);color:var(--teal);background:rgba(126,184,201,.12)}
+.sc-node.done{background:var(--b2);border-color:var(--teal);color:var(--teal)}
+#blk-b{display:none}
+.analyse-meta{font-size:9px;color:var(--t2);line-height:1.7}
+.analyse-meta .hi{color:var(--teal);font-style:italic}
+.run-btn{width:100%;padding:9px;background:rgba(126,184,201,.12);border:0.5px solid rgba(126,184,201,.35);border-radius:7px;color:var(--teal);font-family:'DM Mono',monospace;font-size:0.8em;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
+.run-btn:hover:not(:disabled){background:rgba(126,184,201,.22);border-color:rgba(126,184,201,.6)}
+.run-btn:disabled{opacity:.35;cursor:not-allowed}
+.opt-row{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--t2)}
+.opt-row input[type=range]{width:85px;accent-color:var(--violet)}
+.opt-val{color:var(--t1);min-width:20px;text-align:right;font-size:10px}
+.opt-row label{display:flex;align-items:center;gap:5px;cursor:pointer}
+.opt-row input[type=checkbox]{accent-color:var(--gold);width:11px;height:11px}
+
+/* ── STATS ── */
+#stats-panel{bottom:18px;left:18px;width:200px;display:none}
+.sp-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid var(--b1);font-size:9px}
+.sp-row:last-child{border:none}
+.sp-k{color:var(--t2)}
+.sp-v{color:var(--t1)}
+
+/* ── ZOOM ── */
+#zoom-panel{top:18px;right:18px;display:flex;flex-direction:column;overflow:hidden;width:36px}
+.zb{width:36px;height:34px;background:transparent;border:none;color:var(--t2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Mono',monospace}
+.zb:hover{background:var(--b1);color:var(--gold)}
+.zs{height:0.5px;background:var(--b2)}
+#zlabel{font-size:7.5px;color:var(--t3);text-align:center;padding:3px 0;letter-spacing:.05em}
+
+/* ── LEGEND ── */
+#legend-panel{bottom:18px;right:18px;display:none}
+.lg-title{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+.lg-row{display:flex;align-items:center;gap:8px;font-size:9px;color:var(--t2);margin:3px 0}
+.lg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.lg-ring{width:8px;height:8px;border-radius:50%;flex-shrink:0;border-width:1.5px;border-style:solid}
+
+/* ── WORD PANEL ── */
+#word-panel{right:18px;width:310px;display:none}
+.wp-word{font-family:'Fraunces',serif;font-size:1.6em;color:var(--gold2)}
+.wp-freq{font-size:1em;color:var(--t2)}
+.wp-sec{font-size:0.6em;letter-spacing:.5em;text-transform:uppercase;color:var(--t3);margin-top:5px;margin-bottom:2px}
+.wp-tag{font-size:0.8em;display:inline-block;padding:2px 6px;border-radius:3px;background:var(--b2);color:var(--t2);margin:2px 2px 0 0;cursor:pointer;transition:background .15s}
+.wp-tag:hover{background:var(--b3)}
+
+/* ── CONTEXT READER ── */
+#ctx-panel{width:500px;display:none}
+.ctx-meta{font-size:8px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.ctx-text{font-family:'Fraunces',serif;font-size:12px;color:var(--t1);line-height:1.9;overflow-y:auto;max-height:260px;scrollbar-width:thin;scrollbar-color:var(--b2) transparent}
+.ctx-text em{font-style:normal;color:var(--gold2);background:rgba(200,169,110,.13);border-radius:2px;padding:0 2px}
+.ctx-nav{display:flex;gap:6px;margin-top:8px}
+.ctx-nb{padding:4px 10px;background:var(--b1);border:0.5px solid var(--b2);border-radius:5px;color:var(--t2);font-family:'DM Mono',monospace;font-size:9px;cursor:pointer;transition:all .15s}
+.ctx-nb:hover{background:var(--b2);color:var(--t1)}
+
+/* ── TICKER ── */
+#aticker{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:none;flex-direction:row;gap:10px;align-items:center;padding:8px 16px;white-space:nowrap;font-size:9px;color:var(--t2);letter-spacing:.08em}
+.spin{width:12px;height:12px;border:1.5px solid var(--b2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+#phase-bar{position:fixed;bottom:0;left:0;right:0;height:2px;z-index:20;display:none}
+.pf{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--teal),var(--violet));transition:width .35s ease}
+
+/* ── EMPTY ── */
+#empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;pointer-events:none}
+.er{position:absolute;border-radius:50%;border:0.5px dashed rgba(255,255,255,.05);animation:ep 5s ease-in-out infinite}
+.er:nth-child(1){width:160px;height:160px}
+.er:nth-child(2){width:290px;height:290px;animation-delay:1s}
+.er:nth-child(3){width:420px;height:420px;animation-delay:2s}
+.er:nth-child(4){width:550px;height:550px;animation-delay:3s}
+@keyframes ep{0%,100%{opacity:.15}50%{opacity:.5}}
+.e-title{font-family:'Fraunces',serif;font-size:15px;color:rgba(255,255,255,.12);font-style:italic;z-index:1}
+.e-sub{font-size:9px;color:rgba(255,255,255,.06);letter-spacing:.14em;text-transform:uppercase;z-index:1}
+
+/* ── TOOLTIP ── */
+#tip{position:fixed;pointer-events:none;background:rgba(10,10,18,.97);border:0.5px solid var(--b3);border-radius:8px;padding:10px 13px;font-size:10px;color:var(--t1);max-width:270px;line-height:1.6;z-index:9999;display:none;box-shadow:0 12px 40px rgba(0,0,0,.65)}
+.tt-lbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.tt-val{color:var(--t1);font-size:11px;font-weight:500}
+.tt-sub{color:var(--t2);font-size:9px;margin-top:2px;line-height:1.5}
+.tt-tags{margin-top:5px;display:flex;flex-wrap:wrap;gap:3px}
+.tt-tag{padding:1px 5px;background:var(--b2);border-radius:3px;font-size:8px;color:var(--t2)}
+</style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body>
+ <!-- -------chart canvas------- -->
+<div id="layer-chart">
+  <div id="empty">
+    <div class="er"></div><div class="er"></div><div class="er"></div><div class="er"></div>
+    <span class="e-title">Upload a corpus to begin</span>
+    <span class="e-sub">concentric text analysis · four rings</span>
+  </div>
+  <svg id="chart-svg"></svg>
+</div>
+
+
+ <!-- ----ui controls -->
+<div id="layer-ui">
+
+  <!-- ══ INGEST PANEL ══ -->
+  <div class="panel" id="upload-panel">
+    <div id="step-conn">
+      <div class="sc-node" id="sn1">1</div>
+      <div class="sc-line"></div>
+      <div class="sc-node" id="sn2">2</div>
+      <div class="sc-line"></div>
+      <div class="sc-node" id="sn3">3</div>
+    </div>
+
+    <div id="blk-a">
+      <div class="drag-handle hopen" id="hdr-a" data-panel="upload-panel"> +   
+        <div class="tog" onclick="toggleBody('body-a','cg-a','hdr-a')">
+         <span class="cg"> </span> <span class="cg open" id="cg-a"> ▾ </span><span class="cg"> </span>
+          <span class="panel-title c-teal">  1. upload text </span>
+        </div>
+      </div>
+      <div class="panel-body open" id="body-a" style="max-height:600px;opacity:1">
+        <div class="panel-inner">
+          <div id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="dzOver(event)" ondragleave="dzLeave()" ondrop="dzDrop(event)">
+            <div class="dz-icon">⌂</div>
+            <div class="dz-label"> drop here the files or click to browse</div>
+            <div class="dz-sub"> .txt · .md · .csv · or paste below</div>
+          </div>
+          <input type="file" id="file-input" accept=".txt,.md,.csv" multiple>
+          <div class="prog-wrap" id="prog-wrap">
+            <div class="prog-label" id="prog-label">reading…</div>
+            <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+          </div>
+          <textarea id="paste-area" placeholder="…or paste text directly here" rows="3" oninput="pasteInput(this)"></textarea>
+          <button id="reset-corpus" onclick="resetCorpus()">↺ clear corpus</button>
+         
+        </div>
+      </div>
+    </div>
+
+
+    
+    <div id="blk-b">
+      <div class="drag-handle" id="hdr-b">
+        <div class="tog" onclick="toggleBody('body-b','cg-b','hdr-b')">  
+          <span class="cg"> </span><span class="cg"> </span><span class="cg" id="cg-b">▾</span><span class="cg"> </span>
+          <span class="panel-title c-teal"> 2. configure text </span>
+
+        </div>
+      </div>
+      <div class="panel-body" id="body-b" style="max-height:0;opacity:0">
+        <div class="panel-inner"> <div id="files-list"></div>
+          <div id="corpus-stats">
+            <div class="stat-row"><span class="stat-k">files</span><span class="stat-v" id="st-files">—</span></div>
+            <div class="stat-row"><span class="stat-k">chars</span><span class="stat-v" id="st-chars">—</span></div>
+          </div>
+          <div class="analyse-meta" id="run-meta"></div>
+          <div class="opt-row"><span>top words</span>
+            <input type="range" min="8" max="30" value="18" id="opt-words" oninput="document.getElementById('ov-w').textContent=this.value">
+            <span class="opt-val" id="ov-w">18</span></div>
+          <div class="opt-row"><span>collocate window</span>
+            <input type="range" min="2" max="10" value="5" id="opt-win" oninput="document.getElementById('ov-win').textContent=this.value">
+            <span class="opt-val" id="ov-win">5</span></div>
+          <div class="opt-row">
+            <label><input type="checkbox" id="opt-stops" checked> stopwords</label>
+            <label><input type="checkbox" id="opt-cites" checked> citations</label>
+          </div>
+          <button class="run-btn" id="run-btn" onclick="runAnalysis()"> 3. analyze </button>
+        </div>
+      </div>
+    </div>
+
+      <!-- ══ LEGEND ══ -->
+  <div class="panel" id="legend-panel" style="display:none">
+    <div class="drag-handle hopen" id="hdr-legend" data-panel="legend-panel"> +
+      <div class="tog" onclick="toggleBody('legend-body','cg-legend','hdr-legend')">
+        <span class="cg open" id="cg-legend">▾</span>
+       
+      </div>
+    </div>
+    <div class="panel-body open" id="legend-body" style="  width:200px; opacity:1">
+ 
+        <div style="font-size:0.7em; padding:13px;" > 
+      The graphic consists of five concentric rings.  
+      The bubbles at the center show the main topics of the text corpus
+      the ring around represents the sequence of paragraphs by lenght
+      round there apear the main words of the text
+      while the outer ring shows citations. Grab the + to move around the panels and the triangle to collapse them if needed.
+Roll over the graphic to see more information. You can also zoom in to see more details.
+ 
+      </div>
+    </div>
+  </div>
+
+  
+  </div>
+
+  <!-- ══ STATS ══ -->
+  <div class="panel" id="stats-panel" style="display:none">
+    <div class="drag-handle hopen" id="hdr-stats" data-panel="stats-panel"> +
+      <div class="tog" onclick="toggleBody('stats-body','cg-stats','hdr-stats')">
+        <span class="cg open" id="cg-stats">▾</span>
+        <span class="panel-title c-t2">corpus metrics</span>
+      </div>
+    </div>
+    <div class="panel-body open" id="stats-body" style="max-height:300px;opacity:1">
+      <div class="panel-inner" id="stats-rows" style="gap:0"></div>
+    </div>
+  </div>
+
+
+
+  
+  <!-- ══ ZOOM ══ -->
+  <div class="panel" id="zoom-panel">
+    <div class="drag-handle" id="hdr-zoom" data-panel="zoom-panel" style="padding:5px;justify-content:center;cursor:grab">
+      <span class="c-t3" style="font-size:8px;letter-spacing:.08em">view</span>
+    </div>
+    <button class="zb" onclick="zoomBy(.2)">+</button>
+    <div class="zs"></div><div id="zlabel">100%</div><div class="zs"></div>
+    <button class="zb" onclick="zoomBy(-.2)">−</button>
+    <div class="zs"></div>
+    <button class="zb" style="font-size:11px" onclick="zoomReset()">⟳</button>
+  </div>
+
+
+  <!-- ══ WORD DETAIL ══ -->
+  <div class="panel" id="word-panel" style="display:none">
+    <div class="drag-handle hopen" id="hdr-word" data-panel="word-panel"> +
+      <div class="tog" onclick="toggleBody('word-body','cg-word','hdr-word')">
+        <span class="cg open" id="cg-word">▾</span>
+        <span class="panel-title c-violet">word detail</span>
+      </div>
+      <span style="font-size:14px;color:var(--t3);cursor:pointer" onclick="closeWordPanel()">×</span>
+    </div>
+    <div class="panel-body open" id="word-body" style="max-height:400px;opacity:1">
+      <div class="panel-inner">
+        <div class="wp-word" id="wp-word"></div>
+        <div class="wp-freq" id="wp-freq"></div>
+        <div class="sep"></div>
+        <div class="wp-sec">collocates</div><div id="wp-collocates"></div>
+        <div class="wp-sec">paragraphs</div><div id="wp-paras"></div>
+        <div class="wp-sec">tf-idf score</div><div class="wp-freq" id="wp-tfidf"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONTEXT READER ══ -->
+  <div class="panel" id="ctx-panel" style="display:none">
+    <div class="drag-handle hopen" id="hdr-ctx" data-panel="ctx-panel">
+      <div class="tog" onclick="toggleBody('ctx-body','cg-ctx','hdr-ctx')">
+        <span class="cg open" id="cg-ctx">▾</span>
+        <span class="panel-title c-teal">context reader</span>
+      </div>
+      <span style="font-size:14px;color:var(--t3);cursor:pointer" onclick="closeCtxPanel()">×</span>
+    </div>
+    <div class="panel-body open" id="ctx-body" style="max-height:260px;opacity:1">
+      <div class="panel-inner">
+        <div class="ctx-meta" id="ctx-meta"></div>
+        <div class="ctx-text" id="ctx-text"></div>
+        <div class="ctx-nav">
+          <button class="ctx-nb" onclick="ctxNav(-1)">← prev</button>
+          <button class="ctx-nb" onclick="ctxNav(1)">next →</button>
+          <button class="ctx-nb" onclick="closeCtxPanel()" style="margin-left:auto">close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="panel" id="aticker" style="display:none;padding:8px 16px">
+    <div class="spin"></div><span id="atick-lbl">initialising…</span>
+  </div>
+  <div id="phase-bar"><div class="pf" id="phase-fill"></div></div>
+
+</div>
+<div id="tip"></div>
+
+
+  
+
+
+
+
+
+
+
+<script>
+/* ═════════════════════════════════════
+   STATE
+═════════════════════════════════════ */
+let FILES=[], CORPUS=null, selectedTopic=null;
+let ctxParaIdx=null, ctxHighlight=null;
+let d3Zoom=null, mainZG=null;
+
+/* ═════════════════════════════════════
+   PANEL BODY TOGGLE
+═════════════════════════════════════ */
+function toggleBody(bodyId, cgId, hdrId){
+  const b=document.getElementById(bodyId);
+  if(!b)return;
+  const willOpen=b.style.maxHeight==='0px'||b.style.maxHeight==='0';
+  b.style.maxHeight=willOpen?(b.scrollHeight+60)+'px':'0';
+  b.style.opacity=willOpen?'1':'0';
+  b.classList.toggle('open',willOpen);
+  const cg=document.getElementById(cgId); if(cg)cg.classList.toggle('open',willOpen);
+  const h=document.getElementById(hdrId); if(h)h.classList.toggle('hopen',willOpen);
+}
+function openBody(bodyId, cgId, hdrId){
+  const b=document.getElementById(bodyId); if(!b)return;
+  b.style.maxHeight=(b.scrollHeight+60)+'px'; b.style.opacity='1'; b.classList.add('open');
+  const cg=document.getElementById(cgId); if(cg)cg.classList.add('open');
+  const h=document.getElementById(hdrId); if(h)h.classList.add('hopen');
+}
+
+/* ═════════════════════════════════════
+   DRAGGABLE PANELS
+═════════════════════════════════════ */
+function makeDraggable(panelId, handleId){
+  const panel=document.getElementById(panelId);
+  const handle=document.getElementById(handleId);
+  if(!panel||!handle)return;
+  let dragging=false, ox=0, oy=0;
+
+  handle.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.tog')||e.target.closest('button')||e.target.closest('span[onclick]'))return;
+    dragging=true;
+    handle.setPointerCapture(e.pointerId);
+    const r=panel.getBoundingClientRect();
+    // Anchor panel with fixed positioning
+    panel.style.position='absolute';
+    panel.style.transform='none';
+    panel.style.left=r.left+'px'; panel.style.top=r.top+'px';
+    panel.style.right='auto'; panel.style.bottom='auto';
+    panel.style.zIndex='500';
+    ox=e.clientX-r.left; oy=e.clientY-r.top;
+    e.preventDefault();
+  });
+  handle.addEventListener('pointermove',e=>{
+    if(!dragging)return;
+    let nx=e.clientX-ox, ny=e.clientY-oy;
+    nx=Math.max(0,Math.min(window.innerWidth-panel.offsetWidth,nx));
+    ny=Math.max(0,Math.min(window.innerHeight-panel.offsetHeight,ny));
+    panel.style.left=nx+'px'; panel.style.top=ny+'px';
+    checkOverChart(panel);
+  });
+  handle.addEventListener('pointerup',()=>{dragging=false});
+}
+
+function checkOverChart(panel){
+  const r=panel.getBoundingClientRect();
+  const pcx=r.left+r.width/2, pcy=r.top+r.height/2;
+  const dist=Math.hypot(pcx-window.innerWidth/2, pcy-window.innerHeight/2);
+  const threshold=Math.min(window.innerWidth,window.innerHeight)*.42;
+  panel.classList.toggle('over-chart', dist<threshold);
+}
+
+function initDraggables(){
+  [
+    ['upload-panel','hdr-a'],
+    ['stats-panel','hdr-stats'],
+    ['zoom-panel','hdr-zoom'],
+    ['legend-panel','hdr-legend'],
+    ['word-panel','hdr-word'],
+    ['ctx-panel','hdr-ctx'],
+  ].forEach(([p,h])=>makeDraggable(p,h));
+}
+
+/* ═════════════════════════════════════
+   DRAG & DROP
+═════════════════════════════════════ */
+function dzOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('dz-over')}
+function dzLeave(){document.getElementById('drop-zone').classList.remove('dz-over')}
+function dzDrop(e){e.preventDefault();dzLeave();ingestFiles(Array.from(e.dataTransfer.files))}
+document.getElementById('file-input').addEventListener('change',e=>{ingestFiles(Array.from(e.target.files));e.target.value=''});
+
+let pasteTimer=null;
+function pasteInput(el){
+  clearTimeout(pasteTimer);
+  pasteTimer=setTimeout(()=>{
+    const txt=el.value.trim(); if(txt.length<20)return;
+    const ex=FILES.findIndex(f=>f.name==='[pasted text]');
+    const entry={name:'[pasted text]',text:txt,size:txt.length};
+    if(ex>=0)FILES[ex]=entry; else FILES.push(entry);
+    renderFilesList();updateCorpusStats();showConfigBlock();
+  },600);
+}
+
+function ingestFiles(files){files.forEach(readFile)}
+function readFile(file){
+  const pw=document.getElementById('prog-wrap'),pf=document.getElementById('prog-fill'),pl=document.getElementById('prog-label');
+  pw.style.display='flex'; pl.textContent='reading '+file.name+'…'; pf.style.width='0%';
+  let p=0;
+  const iv=setInterval(()=>{p=Math.min(p+Math.random()*22+6,88);pf.style.width=p+'%'},60);
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    clearInterval(iv); pf.style.width='100%'; pl.textContent='✓ done';
+    setTimeout(()=>{pw.style.display='none';pf.style.width='0%'},400);
+    const ex=FILES.findIndex(f=>f.name===file.name);
+    const entry={name:file.name,text:ev.target.result,size:file.size};
+    if(ex>=0)FILES[ex]=entry; else FILES.push(entry);
+    renderFilesList();updateCorpusStats();showConfigBlock();
+  };
+  reader.readAsText(file,'UTF-8');
+}
+
+function removeFile(idx){
+  FILES.splice(idx,1); renderFilesList(); updateCorpusStats();
+  if(!FILES.length){
+    document.getElementById('blk-b').style.display='none';
+    document.getElementById('step-conn').style.display='none';
+    document.getElementById('reset-corpus').style.display='none';
+  }
+}
+
+function resetCorpus(){
+  FILES=[]; CORPUS=null; selectedTopic=null; ctxParaIdx=null;
+  document.getElementById('files-list').innerHTML='';
+  document.getElementById('paste-area').value='';
+  document.getElementById('corpus-stats').style.display='none';
+  document.getElementById('blk-b').style.display='none';
+  document.getElementById('step-conn').style.display='none';
+  document.getElementById('reset-corpus').style.display='none';
+  document.getElementById('stats-panel').style.display='none';
+  document.getElementById('legend-panel').style.display='none';
+  document.getElementById('word-panel').style.display='none';
+  document.getElementById('ctx-panel').style.display='none';
+  document.getElementById('empty').style.display='flex';
+  d3.select('#chart-svg').selectAll('*').remove();
+  ['sn1','sn2','sn3'].forEach(id=>{const n=document.getElementById(id);n.classList.remove('done','active')});
+  openBody('body-a','cg-a','hdr-a');
+}
+
+function renderFilesList(){
+  const el=document.getElementById('files-list'); el.innerHTML='';
+  FILES.forEach((f,i)=>{
+    const d=document.createElement('div'); d.className='fi';
+    const sz=f.size>1024?Math.round(f.size/1024)+'kb':f.size+'b';
+    d.innerHTML=`<div class="fi-dot"></div><span class="fi-name" title="${f.name}">${f.name}</span><span class="fi-size">${sz}</span><span class="fi-rm" onclick="removeFile(${i})">×</span>`;
+    el.appendChild(d);
+  });
+  document.getElementById('reset-corpus').style.display=FILES.length?'block':'none';
+}
+
+function updateCorpusStats(){
+  const el=document.getElementById('corpus-stats');
+  if(!FILES.length){el.style.display='none';return;}
+  el.style.display='flex';
+  const tot=FILES.reduce((s,f)=>s+f.text.length,0);
+  document.getElementById('st-files').textContent=FILES.length;
+  document.getElementById('st-chars').textContent=fmtNum(tot);
+}
+
+function showConfigBlock(){
+  document.getElementById('step-conn').style.display='flex';
+  document.getElementById('blk-b').style.display='block';
+  openBody('body-b','cg-b','hdr-b');
+  document.getElementById('sn1').classList.add('done');
+  document.getElementById('sn2').classList.add('active');
+  const tot=FILES.reduce((s,f)=>s+f.text.split(/\s+/).filter(Boolean).length,0);
+  document.getElementById('run-meta').innerHTML=FILES.map(f=>`<span class="hi">${f.name}</span>`).join(', ')+`<br>~${fmtNum(tot)} words`;
+}
+
+/* ═════════════════════════════════════
+   NLP ENGINE
+═════════════════════════════════════ */
+const STOPS=new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','is','was','are','were','be','been','have','has','had','do','does','did','that','this','it','he','she','they','we','you','i','not','as','so','if','its','his','her','their','our','my','your','which','who','what','when','where','how','all','no','up','out','there','can','will','would','could','should','may','might','shall','just','also','than','then','more','some','into','about','over','after','before','through','between','during','each','both','very','such','these','those','any','many','much','most','other','another','one','two','three','first','last','long','great','little','good','new','old','high','own','same','right','large','used','well','way','even','back','because','come','here','made','only','see','still','us','him','them']);
+
+function analyse(text,opts){
+  const paragraphs=[];
+  text.split(/\n{2,}/).forEach((blk,i)=>{
+    const t=blk.trim(); if(!t)return;
+    const wc=t.split(/\s+/).filter(Boolean).length;
+    const isTitle=(i===0&&wc<15)||/^#{1,4}\s/.test(t)||/^[A-Z][A-Z\s]{5,40}$/.test(t.trim());
+    const isSection=!isTitle&&wc<20;
+    paragraphs.push({idx:paragraphs.length,raw:t,wordCount:wc,isTitle,isSection});
+  });
+
+  const fullWords=text.toLowerCase().match(/\b[a-záéíóúüñ']{2,}\b/g)||[];
+  const filtered=opts.stops?fullWords.filter(w=>!STOPS.has(w)):fullWords;
+
+  const freq={};
+  filtered.forEach(w=>{freq[w]=(freq[w]||0)+1});
+  const df={};
+  paragraphs.forEach(p=>{new Set((p.raw.toLowerCase().match(/\b[a-z']{2,}\b/g)||[])).forEach(w=>{df[w]=(df[w]||0)+1})});
+  const N=paragraphs.length||1;
+  const tfidf={};
+  Object.entries(freq).forEach(([w,f])=>{tfidf[w]=f*Math.log((N+1)/((df[w]||0)+1))});
+
+  const topWords=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,opts.topWords)
+    .map(([word,count])=>({word,count,tfidf:+(tfidf[word]||0).toFixed(2)}));
+  const trackSet=new Set(topWords.map(d=>d.word));
+  const cloudWords=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,35).map(([word,count])=>({word,count}));
+
+  const WIN=opts.win,collObj={};
+  filtered.forEach((w,i)=>{
+    if(!trackSet.has(w))return;
+    if(!collObj[w])collObj[w]={};
+    for(let d=-WIN;d<=WIN;d++){if(!d)continue;const nw=filtered[i+d];if(nw&&nw!==w&&!STOPS.has(nw))collObj[w][nw]=(collObj[w][nw]||0)+1}
+  });
+  const collocateMap={};
+  Object.entries(collObj).forEach(([w,m])=>{collocateMap[w]=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([cw,cnt])=>({word:cw,count:cnt}))});
+
+  const wordPositions=[],wordParas={};
+  let gt=0;
+  paragraphs.forEach((p,pi)=>{
+    const ptoks=p.raw.toLowerCase().match(/\b[a-z']{2,}\b/g)||[];
+    ptoks.forEach((w,ti)=>{
+      if(trackSet.has(w)){
+        const pos=Math.min((gt+ti)/(fullWords.length||1),.9999);
+        wordPositions.push({word:w,position:pos,paraIdx:pi,paraIsTitle:p.isTitle,paraIsSection:p.isSection});
+        if(!wordParas[w])wordParas[w]=[];
+        if(!wordParas[w].includes(pi))wordParas[w].push(pi);
+      }
+    });
+    gt+=ptoks.length;
+  });
+
+  const topicDefs=[
+    {name:'Narration',emoji:'◈',keys:['said','told','asked','spoke','story','narrative','voice','words']},
+    {name:'Time',emoji:'◷',keys:['year','years','time','day','days','century','period','history','moment']},
+    {name:'Space',emoji:'◉',keys:['city','house','room','place','home','space','region','area']},
+    {name:'People',emoji:'◎',keys:['man','woman','people','person','child','family','society','community']},
+    {name:'Mind',emoji:'◇',keys:['think','thought','mind','know','believe','feel','consciousness','memory','idea']},
+    {name:'Nature',emoji:'◌',keys:['light','dark','sun','water','sky','earth','night','air','world','nature']},
+    {name:'Action',emoji:'◆',keys:['came','went','made','come','take','began','found','used','become']},
+    {name:'Emotion',emoji:'◍',keys:['love','life','death','fear','hope','pain','heart','soul','dream','experience']},
+    {name:'Knowledge',emoji:'◈',keys:['research','study','analysis','result','evidence','theory','system']},
+    {name:'Language',emoji:'◐',keys:['language','word','text','meaning','symbol','discourse','expression']},
+  ];
+  const topics=topicDefs.map(t=>{
+    const matched=t.keys.filter(k=>freq[k]>0);
+    return{...t,freq:matched.reduce((s,k)=>s+(freq[k]||0),0),related:matched.sort((a,b)=>(freq[b]||0)-(freq[a]||0)).slice(0,6)};
+  }).filter(t=>t.freq>0).sort((a,b)=>b.freq-a.freq);
+
+  const citations=[];
+  if(opts.cites){
+    paragraphs.forEach((p,pi)=>{
+      const pat=/\(([A-Z][a-záéíóú\-]+(?:\s+(?:and|&)\s+[A-Z][a-záéíóú\-]+)?(?:\s+et\s+al\.?)?),?\s*(\d{4}[a-z]?)\)/g;
+      let m;
+      while((m=pat.exec(p.raw))!==null)
+        citations.push({ref:m[0],author:m[1],year:m[2]||'',paraIdx:pi,paraFraction:pi/(paragraphs.length||1),context:p.raw.trim().slice(0,130)+'…'});
+    });
+  }
+
+  const sents=text.split(/[.!?]+/).filter(s=>s.trim().split(/\s+/).length>2);
+  const syl=w=>{w=w.toLowerCase().replace(/[^a-z]/g,'');let c=0;w.replace(/[aeiouy]{1,2}/g,()=>c++);return Math.max(c,1)};
+  const asl=sents.length?fullWords.length/sents.length:0;
+  const asw=filtered.length?filtered.reduce((s,w)=>s+syl(w),0)/filtered.length:0;
+  const flesch=Math.max(0,Math.min(100,206.835-1.015*asl-84.6*asw));
+
+  return{paragraphs,topWords,trackSet,collocateMap,wordPositions,wordParas,topics,citations,cloudWords,freq,tfidf,
+    meta:{totalWords:filtered.length,uniqueTypes:Object.keys(freq).length,sentences:sents.length,
+      avgSentenceLen:+asl.toFixed(1),vocabDensity:+(Object.keys(freq).length/(filtered.length||1)*100).toFixed(1),
+      flesch:+flesch.toFixed(0),readability:flesch>70?'easy':flesch>50?'standard':flesch>30?'difficult':'very difficult',
+      paragraphCount:paragraphs.length,citationCount:citations.length}};
+}
+
+/* ═════════════════════════════════════
+   RUN
+═════════════════════════════════════ */
+function runAnalysis(){
+  if(!FILES.length)return;
+  const btn=document.getElementById('run-btn');
+  btn.disabled=true; btn.textContent='◌ processing…';
+  document.getElementById('aticker').style.display='flex';
+  document.getElementById('phase-bar').style.display='block';
+  selectedTopic=null; ctxParaIdx=null;
+
+  const opts={
+    topWords:+document.getElementById('opt-words').value,
+    win:+document.getElementById('opt-win').value,
+    stops:document.getElementById('opt-stops').checked,
+    cites:document.getElementById('opt-cites').checked,
+  };
+
+  const phases=[[5,'tokenizing…'],[22,'freq & tf-idf…'],[42,'co-occurrence…'],[60,'topics…'],[76,'positions…'],[90,'citations…'],[97,'rendering…']];
+  let pi=0;
+  const pf=document.getElementById('phase-fill'),lbl=document.getElementById('atick-lbl');
+  const iv=setInterval(()=>{if(pi<phases.length){pf.style.width=phases[pi][0]+'%';lbl.textContent=phases[pi][1];pi++}},220);
+
+  setTimeout(()=>{
+    clearInterval(iv); pf.style.width='100%';
+    CORPUS=analyse(FILES.map(f=>f.text).join('\n\n'),opts);
+    ['sn2','sn3'].forEach(id=>document.getElementById(id).classList.add('done'));
+    document.getElementById('sn2').classList.remove('active');
+    renderStatsPanel(CORPUS.meta);
+    document.getElementById('stats-panel').style.display='block';
+    document.getElementById('legend-panel').style.display='flex';
+    document.getElementById('empty').style.display='none';
+    renderChart(CORPUS);
+    btn.disabled=false; btn.textContent='◎ re-analyse';
+    document.getElementById('aticker').style.display='none';
+    setTimeout(()=>{document.getElementById('phase-bar').style.display='none';pf.style.width='0%'},400);
+    document.querySelectorAll('.panel').forEach(checkOverChart);
+  },1650);
+}
+
+function renderStatsPanel(m){
+  const rows=[['words',fmtNum(m.totalWords)],['unique',fmtNum(m.uniqueTypes)],['density',m.vocabDensity+'%'],
+    ['sentences',fmtNum(m.sentences)],['avg len',m.avgSentenceLen+' w'],['paragraphs',m.paragraphCount],
+    ['readability',m.readability+' ('+m.flesch+')'],['citations',m.citationCount]];
+  document.getElementById('stats-rows').innerHTML=rows.map(([k,v])=>
+    `<div class="sp-row"><span class="sp-k">${k}</span><span class="sp-v">${v}</span></div>`).join('');
+}
+
+/* ═════════════════════════════════════
+   CONTEXT PANEL
+═════════════════════════════════════ */
+function showCtxPanel(paraIdx, hlWord){
+  if(!CORPUS)return;
+  const p=CORPUS.paragraphs[paraIdx]; if(!p)return;
+  ctxParaIdx=paraIdx; ctxHighlight=hlWord||null;
+  const tag=p.isTitle?'title':p.isSection?'section header':`paragraph ${paraIdx+1} / ${CORPUS.paragraphs.length}`;
+  document.getElementById('ctx-meta').textContent=tag+' · '+p.wordCount+' words';
+  let html=p.raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if(ctxHighlight){
+    const re=new RegExp('\\b('+ctxHighlight.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','gi');
+    html=html.replace(re,'<em>$1</em>');
+  }
+  document.getElementById('ctx-text').innerHTML=html;
+  const panel=document.getElementById('ctx-panel');
+  panel.style.display='flex';
+  openBody('ctx-body','cg-ctx','hdr-ctx');
+  checkOverChart(panel);
+}
+function closeCtxPanel(){document.getElementById('ctx-panel').style.display='none';ctxParaIdx=null}
+function ctxNav(dir){
+  if(ctxParaIdx===null||!CORPUS)return;
+  const next=ctxParaIdx+dir;
+  if(next>=0&&next<CORPUS.paragraphs.length)showCtxPanel(next,ctxHighlight);
+}
+
+/* ═════════════════════════════════════
+   WORD DETAIL
+═════════════════════════════════════ */
+function showWordPanel(word, data){
+  document.getElementById('word-panel').style.display='flex';
+  document.getElementById('wp-word').textContent=word;
+  document.getElementById('wp-freq').textContent='×'+(data.freq[word]||0)+' occurrences';
+  document.getElementById('wp-tfidf').textContent=(data.tfidf[word]||0).toFixed(3);
+  const cols=data.collocateMap[word]||[];
+  document.getElementById('wp-collocates').innerHTML=cols.length
+    ?cols.map(c=>`<span class="wp-tag">${c.word} <span class="c-t3">×${c.count}</span></span>`).join('')
+    :'<span style="font-size:9px;color:var(--t3)">none found</span>';
+  const paras=data.wordParas[word]||[];
+  document.getElementById('wp-paras').innerHTML=paras.slice(0,8).map(pi=>
+    `<span class="wp-tag" onclick="showCtxPanel(${pi},'${word}')">¶${pi+1}</span>`).join('')+
+    (paras.length>8?`<span class="wp-tag c-t3">+${paras.length-8}</span>`:'');
+  openBody('word-body','cg-word','hdr-word');
+  checkOverChart(document.getElementById('word-panel'));
+  applyWordHighlight(word);
+}
+function closeWordPanel(){
+  document.getElementById('word-panel').style.display='none';
+  clearHighlights();
+}
+
+/* ═════════════════════════════════════
+   HIGHLIGHT SYSTEM
+═════════════════════════════════════ */
+function applyWordHighlight(word){
+  d3.selectAll('.word-dot').transition().duration(200)
+    .attr('opacity',d=>d.word===word?1:.06)
+    .attr('r',d=>d.word===word?(d.paraIsTitle?6:4.5):2.2);
+  d3.selectAll('.topic-bubble').transition().duration(200)
+    .attr('opacity',d=>(d.related||[]).includes(word)?1:.12);
+}
+
+function applyTopicHighlight(topicName){
+  // Toggle: clicking same topic clears
+  if(selectedTopic===topicName){clearHighlights();return;}
+  selectedTopic=topicName;
+  const topic=CORPUS.topics.find(t=>t.name===topicName);
+  if(!topic){clearHighlights();return;}
+  const tWords=new Set(topic.related);
+  d3.selectAll('.word-dot').transition().duration(220)
+    .attr('opacity',d=>tWords.has(d.word)?1:.05)
+    .attr('r',d=>tWords.has(d.word)?(d.paraIsTitle?6.5:4.8):2);
+  d3.selectAll('.topic-bubble').transition().duration(220)
+    .attr('opacity',d=>d.name===topicName?1:.1);
+  // Open context panel on first paragraph where any related word appears
+  if(topic.related.length&&CORPUS.wordParas[topic.related[0]]?.length){
+    const pi=CORPUS.wordParas[topic.related[0]][0];
+    showCtxPanel(pi, topic.related[0]);
+  }
+}
+
+function clearHighlights(){
+  selectedTopic=null;
+  d3.selectAll('.word-dot').transition().duration(200)
+    .attr('opacity',1).attr('r',d=>d.paraIsTitle?4.5:d.paraIsSection?3.5:2.8);
+  d3.selectAll('.topic-bubble').transition().duration(200).attr('opacity',1);
+}
+
+/* ═════════════════════════════════════
+   TOOLTIP
+═════════════════════════════════════ */
+const TIP=document.getElementById('tip');
+function tip(html,e){TIP.style.display='block';TIP.innerHTML=html;moveTip(e)}
+function moveTip(e){
+  let x=e.clientX+16,y=e.clientY-12;
+  if(x+280>window.innerWidth)x=e.clientX-285;
+  if(y+TIP.offsetHeight>window.innerHeight)y=e.clientY-TIP.offsetHeight-10;
+  TIP.style.left=x+'px';TIP.style.top=y+'px';
+}
+function hideTip(){TIP.style.display='none'}
+
+/* ═════════════════════════════════════
+   D3 ZOOM + PAN
+═════════════════════════════════════ */
+function initZoom(svg, zg){
+  d3Zoom=d3.zoom().scaleExtent([.12,10])
+    .filter(e=>{
+      if(e.target.closest&&e.target.closest('.panel'))return false;
+      return true;
+    })
+    .on('zoom',ev=>{
+      zg.attr('transform',ev.transform);
+      document.getElementById('zlabel').textContent=Math.round(ev.transform.k*100)+'%';
+    });
+  svg.call(d3Zoom);
+  svg.on('mousedown.cur',()=>svg.classed('panning',true))
+     .on('mouseup.cur',()=>svg.classed('panning',false));
+}
+function zoomBy(delta){if(d3Zoom)d3.select('#chart-svg').transition().duration(300).call(d3Zoom.scaleBy,1+delta-1000)}
+function zoomReset(){if(d3Zoom){d3.select('#chart-svg').transition().duration(400).call(d3Zoom.transform,d3.zoomIdentity);document.getElementById('zlabel').textContent='100%'}}
+
+/* ═════════════════════════════════════
+   CLICK OUTSIDE → CLEAR HIGHLIGHTS
+═════════════════════════════════════ */
+document.getElementById('chart-svg').addEventListener('click',e=>{
+  if(e.target.tagName==='svg'||e.target.tagName==='rect'){clearHighlights()}
+});
+
+/* ═════════════════════════════════════
+   CHART RENDER
+═════════════════════════════════════ */
+function renderChart(data){
+  const W=window.innerWidth, H=window.innerHeight;
+  const svg=d3.select('#chart-svg').attr('width',W).attr('height',H);
+  svg.selectAll('*').remove();
+
+  // Transparent click catcher
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','transparent');
+
+  // defs
+  const defs=svg.append('defs');
+  const gf=defs.append('filter').attr('id','glow').attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+  gf.append('feGaussianBlur').attr('stdDeviation','2.5').attr('result','blur');
+  const fm=gf.append('feMerge');
+  fm.append('feMergeNode').attr('in','blur');fm.append('feMergeNode').attr('in','SourceGraphic');
+
+  // Star field (outside zoom group)
+  const starG=svg.append('g').style('pointer-events','none');
+  d3.range(90).forEach(()=>starG.append('circle')
+    .attr('cx',Math.random()*W).attr('cy',Math.random()*H)
+    .attr('r',Math.random()*.65+.2).attr('fill','white').attr('opacity',Math.random()*.22+.04));
+
+  // Zoomable group
+  mainZG=svg.append('g').attr('transform',`translate(${W/2},${H/2})`);
+
+  const base=Math.min(W,H)*.43;
+  const R1=base*1.33;
+  const R2i=base*1.35,  R2o=base*1.42;
+  const R3i=base*1.48 , R3o=base*1.60;
+  const R4i=base*1.65,  R4o=base*1.90;
+  const RCi=R1+115, RCo=R2i+100; // word cloud belt
+
+  renderC4(mainZG,data,R4i,R4o);
+  renderC3(mainZG,data,R3i,R3o);
+  renderC2(mainZG,data,R2i,R2o);
+  renderC1(mainZG,data,R1,RCi,RCo);
+
+  // Outer dashed circles
+  [R4o+10,R4o+22].forEach((r,i)=>mainZG.append('circle').attr('r',r).attr('fill','none')
+    .attr('stroke',`rgba(255,255,255,${.025-i*.01})`).attr('stroke-width',.5).attr('stroke-dasharray','3 10'));
+
+  initZoom(svg, mainZG);
+}
+
+/* ═════════════════════════════════════
+   C1 — TOPIC FORCE + WORD CLOUD BELT
+═════════════════════════════════════ */
+function renderC1(g,data,forceR,cloudRi,cloudRo){
+  const pal=['#c8a96e','#e2c48a','#d4a860','#be9050','#a87840','#8c6030','#f0d090','#b08020','#9b7fc7','#7eb8c9'];
+  const colScale=d3.scaleOrdinal().domain(data.topics.map(d=>d.name)).range(pal);
+  const maxF=d3.max(data.topics,d=>d.freq)||1;
+  const rScale=d3.scaleSqrt().domain([0,maxF]).range([9,forceR*.33]);
+  const nodes=data.topics.slice(0,9).map(d=>({...d,r:rScale(d.freq),x:(Math.random()-.5)*forceR*.4,y:(Math.random()-.5)*forceR*.4}));
+
+  const clipId='c1c'+Math.round(Math.random()*5999);
+  g.append('defs').append('clipPath').attr('id',clipId).append('circle').attr('r',forceR);
+  const c1=g.append('g').attr('clip-path',`url(#${clipId})`);
+
+  c1.append('circle').attr('r',forceR).attr('fill','rgba(8,8,14,.78)').attr('stroke','rgba(200,169,110,.14)').attr('stroke-width',.5);
+  c1.append('circle').attr('r',forceR*.93).attr('fill','none').attr('stroke','rgba(200,169,110,.05)').attr('stroke-width',6);
+
+  const sim=d3.forceSimulation(nodes)
+    .force('center',d3.forceCenter(0,0))
+    .force('collide',d3.forceCollide(d=>d.r+3).strength(.93))
+    .force('charge',d3.forceManyBody().strength(-14))
+    .force('x',d3.forceX(0).strength(.07)).force('y',d3.forceY(0).strength(.07))
+    .stop();
+  for(let i=0;i<250;i++)sim.tick();
+
+  nodes.forEach((a,ai)=>nodes.forEach((b,bi)=>{
+    if(bi<=ai)return;
+    c1.append('line').attr('x1',a.x-10).attr('y1',a.y+100).attr('x2',b.x).attr('y2',b.y)
+      .attr('stroke','rgba(200,169,110,.04)').attr('stroke-width',.3);
+  }));
+
+  const bubbles=c1.selectAll('.topic-bubble').data(nodes).enter().append('g')
+    .attr('class','topic-bubble').attr('transform',d=>`translate(${d.x},${d.y})`).style('cursor','pointer');
+
+  bubbles.append('circle').attr('r',d=>d.r+4).attr('fill',d=>colScale(d.name)).attr('fill-opacity',.07).attr('stroke','none');
+  bubbles.append('circle').attr('r',d=>d.r)
+    .attr('fill',d=>colScale(d.name)).attr('fill-opacity',.72)
+    .attr('stroke',d=>colScale(d.name)).attr('stroke-opacity',.45).attr('stroke-width',1);
+  bubbles.append('text').text(d=>d.r>13?d.emoji:'')
+    .attr('text-anchor','middle').attr('dominant-baseline','central').attr('y',d=>d.r>22?-d.r*.28:0)
+    .style('font-size',d=>Math.min(d.r*.55,14)+'px').style('fill','rgba(255,255,255,.65)').style('pointer-events','none');
+  bubbles.append('text').text(d=>d.r>18?d.name:'')
+    .attr('text-anchor','middle').attr('dominant-baseline','central').attr('y',d=>d.r>22?d.r*.22:0)
+    .style('font-family','DM Mono,monospace').style('font-size',d=>Math.min(d.r*.29,9.5)+'px')
+    .style('fill','rgba(255,255,255,.7)').style('pointer-events','none');
+  bubbles.append('text').text(d=>d.r>27?d.freq:'')
+    .attr('text-anchor','middle').attr('y',d=>d.r*.57)
+    .style('font-size','7.5px').style('fill','rgba(255,255,255,.28)').style('pointer-events','none');
+
+  bubbles
+    .on('mousemove',(e,d)=>tip(`<div class="tt-lbl">topic cluster</div>
+      <div class="tt-val">${d.emoji} ${d.name}</div>
+      <div class="tt-sub">score: ${d.freq} · click to highlight C3</div>
+      <div class="tt-tags">${d.related.map(w=>`<span class="tt-tag">${w}</span>`).join('')}</div>`,e))
+    .on('mouseleave',hideTip)
+    .on('click',(e,d)=>{e.stopPropagation();applyTopicHighlight(d.name)});
+
+  c1.append('circle').attr('r',forceR).attr('fill','none').attr('stroke','rgba(200,169,110,.2)').attr('stroke-width',.5);
+
+  /* ── WORD CLOUD BELT (between C1 and C2) ── */
+  const cloudBelt=g.append('g').attr('class','cloud-belt');
+  const cloudWords=data.cloudWords.slice(0,28);
+  const maxC=cloudWords[0]?.count||1;
+  const fScale=d3.scaleSqrt().domain([1,maxC]).range([6.5,14.5]);
+  const cloudPal=['#c8a96e','#e2c48a','#7eb8c9','#9b7fc7','#7ec99b','#c97e7e','#d4a860','#a0c8d4','#b8a0d4','#a0d4b8','#d4c8a0','#a0b8d4'];
+  const beltW=cloudRo-cloudRi;
+
+  cloudWords.forEach((wd,i)=>{
+    const angle=(i/cloudWords.length)*Math.PI*2-Math.PI/2;
+    // Stagger radius in 3 lanes
+    const lane=i%3;
+    const r=cloudRi+4+lane*(beltW-8)/2.5;
+    const x=Math.cos(angle)*r, y=Math.sin(angle)*r;
+    const fs=fScale(wd.count);
+    // Tangential text (perpendicular to radius)
+    let rot=(angle*180/Math.PI)+90;
+    // Keep text upright
+    if(Math.cos(angle)<0)rot+=180;
+
+    cloudBelt.append('text')
+      .attr('x',x).attr('y',y)
+      .attr('text-anchor','middle').attr('dominant-baseline','central')
+      .attr('transform',`rotate(${rot},${x},${y})`)
+      .style('font-family','Fraunces,serif').style('font-style','italic')
+      .style('font-size',(fs-40)+'em').style('fill',cloudPal[i%cloudPal.length])
+      .style('fill-opacity',.68).style('cursor','pointer').style('user-select','none')
+      .text(wd.word)
+      .on('mousemove',e=>tip(`<div class="tt-lbl">word cloud</div><div class="tt-val">${wd.word}</div><div class="tt-sub">×${wd.count}</div>`,e))
+      .on('mouseleave',hideTip)
+      .on('click',e=>{e.stopPropagation();if(CORPUS)showWordPanel(wd.word,CORPUS)});
+  });
+}
+
+/* ═════════════════════════════════════
+   C2 — PARAGRAPH DONUT
+═════════════════════════════════════ */
+function renderC2(g,data,rIn,rOut){
+  const paras=data.paragraphs;
+  const total=paras.reduce((s,p)=>s+p.wordCount,0)||1;
+  const segs=[];
+  paras.forEach((p,i)=>{
+    segs.push({type:'para',...p,weight:Math.max(p.wordCount/total,.004)});
+    segs.push({type:'space',idx:i,weight:p.isTitle?.022:p.isSection?.015:.006});
+  });
+  const tW=segs.reduce((s,d)=>s+d.weight,0);
+  let angle=-Math.PI/2;
+  segs.forEach(d=>{d.sa=angle;d.ea=angle+(d.weight/tW)*Math.PI*2;angle=d.ea});
+
+  const arc=d3.arc().innerRadius(rIn).outerRadius(rOut).cornerRadius(1.5);
+  const arcH=d3.arc().innerRadius(rIn-4).outerRadius(rOut+6).cornerRadius(2);
+  const c2=g.append('g');
+
+  c2.append('circle').attr('r',(rIn+rOut)/2).attr('fill','none')
+    .attr('stroke','rgba(126,184,201,.04)').attr('stroke-width',rOut-rIn);
+
+  c2.selectAll('.pseg').data(segs).enter().append('path').attr('class','pseg')
+    .attr('d',d=>arc({startAngle:d.sa,endAngle:d.ea}))
+    .attr('fill',d=>d.type==='space'?'transparent':d.isTitle?'rgba(200,169,110,.55)':d.isSection?'rgba(200,169,110,.28)':'rgba(126,184,201,.2)')
+    .attr('stroke',d=>d.type==='space'?'none':d.isTitle?'rgba(200,169,110,.75)':d.isSection?'rgba(200,169,110,.4)':'rgba(126,184,201,.3)')
+    .attr('stroke-width',.5).style('cursor',d=>d.type==='para'?'pointer':'default')
+    .on('mouseover',function(e,d){if(d.type!=='para')return;d3.select(this).attr('d',arcH({startAngle:d.sa,endAngle:d.ea}))})
+    .on('mouseout',function(e,d){d3.select(this).attr('d',arc({startAngle:d.sa,endAngle:d.ea}))})
+    .on('mousemove',(e,d)=>{
+      if(d.type!=='para')return;
+      const preview=d.raw.trim().split(/\s+/).slice(0,9).join(' ')+'…';
+      const tag=d.isTitle?'title':d.isSection?'section':`¶${d.idx+1}`;
+      tip(`<div class="tt-lbl">${tag}</div><div class="tt-sub" style="font-size:10px;line-height:1.5">${preview}</div><div class="tt-sub">${d.wordCount} w · click to read</div>`,e);
+    })
+    .on('mouseleave',hideTip)
+    .on('click',(e,d)=>{if(d.type==='para'){e.stopPropagation();showCtxPanel(d.idx,null)}});
+
+  c2.append('circle').attr('r',rIn).attr('fill','none').attr('stroke','rgba(126,184,201,.15)').attr('stroke-width',.5);
+  c2.append('circle').attr('r',rOut).attr('fill','none').attr('stroke','rgba(126,184,201,.22)').attr('stroke-width',.5);
+}
+
+/* ═════════════════════════════════════
+   C3 — WORD OCCURRENCE TRAIL
+═════════════════════════════════════ */
+function renderC3(g,data,rIn,rOut){
+  const rBand=(rOut-rIn)*.44;
+  const wCols={};
+  const pal=['#9b7fc7','#7eb8c9','#c8a96e','#7ec99b','#c97e7e','#c9a07e','#7eb8a0','#b87ec9','#7e9bc9','#c9c07e'];
+  data.topWords.forEach((d,i)=>{wCols[d.word]=pal[i%pal.length]});
+
+  const c3=g.append('g');
+  c3.append('circle').attr('r',(rIn+rOut)/2).attr('fill','none')
+    .attr('stroke','rgba(155,127,199,.06)').attr('stroke-width',rOut-rIn);
+  c3.append('circle').attr('r',rIn).attr('fill','none').attr('stroke','rgba(155,127,199,.14)').attr('stroke-width',.5);
+  c3.append('circle').attr('r',rOut).attr('fill','none').attr('stroke','rgba(155,127,199,.2)').attr('stroke-width',.5);
+
+  // Inner labels
+  data.topWords.slice(0,12).forEach((wd,i)=>{
+    const a=(i/12)*Math.PI*2-Math.PI/2;
+    const lx=Math.cos(a)*(rIn-11),ly=Math.sin(a)*(rIn-11);
+    c3.append('text').text(wd.word).attr('x',lx).attr('y',ly)
+      .attr('text-anchor',Math.cos(a)>.1?'start':Math.cos(a)<-.1?'end':'middle').attr('dominant-baseline','central')
+      .style('font-size','7px').style('fill',wCols[wd.word]||'rgba(255,255,255,.2)').style('opacity',.42).style('pointer-events','none');
+  });
+
+  const byB={};
+  data.wordPositions.forEach(d=>{
+    const key=Math.round((d.position*Math.PI*2-Math.PI/2)*170)/170;
+    if(!byB[key])byB[key]=[];byB[key].push(d);
+  });
+
+  c3.selectAll('.word-dot').data(data.wordPositions).enter().append('circle')
+    .attr('class','word-dot')
+    .each(function(d){
+      const a=d.position*Math.PI*2-Math.PI/2;
+      const key=Math.round(a*170)/170;
+      const stack=byB[key],si=stack.indexOf(d);
+      const r=rIn+rBand*(si+.5)/Math.max(stack.length,1)+rBand*.1;
+      d3.select(this).attr('cx',Math.cos(a)*r).attr('cy',Math.sin(a)*r);
+    })
+    .attr('r',d=>d.paraIsTitle?4.5:d.paraIsSection?3.5:2.8)
+    .attr('fill',d=>wCols[d.word]||'rgba(155,127,199,.7)').attr('fill-opacity',.82)
+    .attr('stroke',d=>wCols[d.word]||'rgba(155,127,199,.4)').attr('stroke-opacity',.3).attr('stroke-width',.8)
+    .style('cursor','pointer')
+    .on('mousemove',(e,d)=>{
+      const cols=(data.collocateMap[d.word]||[]).slice(0,4).map(c=>c.word).join(', ')||'—';
+      tip(`<div class="tt-lbl">occurrence</div><div class="tt-val">${d.word}</div>
+           <div class="tt-sub">¶${d.paraIdx+1} · ${(d.position*100).toFixed(1)}%</div>
+           <div class="tt-sub">collocates: ${cols}</div>`,e);
+    })
+    .on('mouseleave',hideTip)
+    .on('click',(e,d)=>{e.stopPropagation();showWordPanel(d.word,CORPUS);showCtxPanel(d.paraIdx,d.word)});
+}
+
+/* ═════════════════════════════════════
+   C4 — CITATIONS
+═════════════════════════════════════ */
+function renderC4(g,data,rIn,rOut){
+  if(!data.citations.length)return;
+  const rMid=(rIn+rOut)/2;
+  const c4=g.append('g');
+  c4.append('circle').attr('r',rMid).attr('fill','none').attr('stroke','rgba(201,126,126,.05)').attr('stroke-width',rOut-rIn);
+  c4.append('circle').attr('r',rIn).attr('fill','none').attr('stroke','rgba(201,126,126,.13)').attr('stroke-width',.5);
+  c4.append('circle').attr('r',rOut).attr('fill','none').attr('stroke','rgba(201,126,126,.2)').attr('stroke-width',.5);
+
+  const byPara={};
+  data.citations.forEach(c=>{if(!byPara[c.paraIdx])byPara[c.paraIdx]=[];byPara[c.paraIdx].push(c)});
+  new Set(data.citations.map(c=>c.paraIdx)).forEach(pi=>{
+    const a=(pi/(data.paragraphs.length||1))*Math.PI*2-Math.PI/2;
+    c4.append('line').attr('x1',Math.cos(a)*rIn).attr('y1',Math.sin(a)*rIn)
+      .attr('x2',Math.cos(a)*(rOut+4)).attr('y2',Math.sin(a)*(rOut+4))
+      .attr('stroke','rgba(201,126,126,.15)').attr('stroke-width',.5).attr('stroke-dasharray','2 4');
+  });
+
+  const cg=c4.selectAll('.cite-g').data(data.citations).enter().append('g').attr('class','cite-g')
+    .attr('transform',d=>{
+      const stack=byPara[d.paraIdx],si=stack.indexOf(d);
+      const a=d.paraFraction*Math.PI*2-Math.PI/2;
+      return`translate(${Math.cos(a)*(rIn+(rOut-rIn)*(.2+si*.3))},${Math.sin(a)*(rIn+(rOut-rIn)*(.2+si*.3))})`;
+    }).style('cursor','pointer');
+
+  cg.append('circle').attr('r',8).attr('fill','rgba(201,126,126,.08)');
+  cg.append('circle').attr('r',5).attr('fill','rgba(201,126,126,.72)').attr('stroke','rgba(201,126,126,.9)').attr('stroke-width',1.5);
+  cg.append('text')
+    .text(d=>{const m=d.author?d.author.split(',')[0].split(' ').pop():'?';return m.length>9?m.slice(0,8)+'…':m})
+    .attr('text-anchor',d=>Math.cos(d.paraFraction*Math.PI*2-Math.PI/2)>0?'start':'end')
+    .attr('dominant-baseline','central')
+    .attr('dx',d=>Math.cos(d.paraFraction*Math.PI*2-Math.PI/2)>0?9:-9)
+    .style('font-size','7.5px').style('fill','rgba(201,126,126,.85)').style('pointer-events','none');
+
+  cg.on('mousemove',(e,d)=>tip(`<div class="tt-lbl">citation</div><div class="tt-val">${d.ref}</div>
+      <div class="tt-sub">¶${d.paraIdx+1} · ${d.year||'—'}</div>
+      <div class="tt-sub" style="font-style:italic;margin-top:4px">${d.context}</div>`,e))
+    .on('mouseleave',hideTip)
+    .on('click',(e,d)=>{e.stopPropagation();showCtxPanel(d.paraIdx,d.author)});
+}
+
+/* ═════════════════════════════════════
+   HELPERS
+═════════════════════════════════════ */
+function fmtNum(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(1)+'k':String(n)}
+window.addEventListener('resize',()=>{if(CORPUS)renderChart(CORPUS)});
+
+/* ═════════════════════════════════════
+   INIT + DEMO
+═════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded',()=>{
+  initDraggables();
+
+  // Position panels at default positions
+  const pos=(id,t,r,b,l)=>{
+    const el=document.getElementById(id);
+    if(t!==null)el.style.top=t+'px'; if(r!==null)el.style.right=r+'px';
+    if(b!==null)el.style.bottom=b+'px'; if(l!==null)el.style.left=l+'px';
+    if(r!==null)el.style.left='auto'; if(b!==null)el.style.top='auto';
+  };
+  pos('zoom-panel',18,18,null,null);
+  pos('legend-panel',null,18,18,null);
+  pos('stats-panel',null,null,18,18);
+  pos('word-panel',Math.round(window.innerHeight/2-120),18,null,null);
+  const cp=document.getElementById('ctx-panel');
+  cp.style.bottom='18px'; cp.style.left=Math.round(window.innerWidth/2-200)+'px';
+
+  // Demo
+  setTimeout(()=>{
+    FILES=[{name:'demo_memory.txt',text:DEMO,size:DEMO.length}];
+    renderFilesList();updateCorpusStats();showConfigBlock();
+  },300);
+});
+
+const DEMO=`The Architecture of Memory
+
+In the late nineteenth century, scholars began to question the nature of consciousness and its relationship to language. The mind, they argued, was not a passive receiver of experience but an active constructor of meaning (James, 1890).
+
+When we consider how memories are formed, we must first acknowledge the role of attention. Without directed focus, experience passes through us like water through open hands. The stream of consciousness that William James famously described was not a metaphor but a phenomenological observation of great depth and complexity.
+
+Chapter One: Language and Encoding
+
+Language shapes memory in profound ways. The words we have available to describe an experience determine, in part, how that experience is encoded and later retrieved. This linguistic relativity extends beyond simple vocabulary into the deep structures of grammar (Whorf, 1956).
+
+The relationship between narrative and memory has occupied philosophers and psychologists alike. We do not simply remember events; we reconstruct them, each time adding new layers of interpretation and meaning. The remembered past is always, in some sense, a work of fiction that the mind assembles from fragments.
+
+Chapter Two: Neural Substrates
+
+Episodic memory, as defined by Tulving, stands in contrast to semantic memory. Where the latter stores general knowledge about the world, the former preserves the when and where of personal experience. This distinction has proven enormously fruitful in neuropsychological research (Tulving, 1972).
+
+The hippocampus plays a central role in the consolidation of new memories. Damage to this structure, as famously documented in the case of patient H.M., results in an inability to form new long-term memories while leaving older memories largely intact. The role of the hippocampus in binding together the elements of an experience into a coherent memory trace remains a central question in cognitive neuroscience.
+
+Forgetting, far from being a failure of the system, serves important adaptive functions. The selective retention of significant experiences over trivial ones allows the mind to operate efficiently in a complex world. Memory is not a recording device but a dynamic, reconstructive process shaped by present goals and contexts.
+
+Chapter Three: Memory and Trauma
+
+Trauma disrupts normal memory processes in distinctive ways. Intrusive memories, flashbacks, and dissociation represent failures of normal integration. The body, Bessel van der Kolk has argued, keeps the score of these unprocessed experiences (van der Kolk, 2014). The treatment of traumatic memory requires understanding both the psychological and neurobiological dimensions of the disorder.
+
+Social memory extends beyond the individual. Communities construct shared narratives that bind members together and define collective identity. These narratives are transmitted across generations through ritual, story, and material culture. The study of collective memory reveals how the past is always shaped by present concerns and power relations (Halbwachs, 1925).
+
+The future of memory research lies at the intersection of neuroscience, psychology, and philosophy. New imaging technologies allow us to observe the brain in the act of remembering, bringing us closer to understanding one of the most fundamental aspects of human existence. The challenge is to integrate findings across multiple levels of analysis, from the molecular to the social.`;
+</script>
+</body>
+</html>

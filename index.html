@@ -1,0 +1,1983 @@
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>German Fernandez — Information Designer</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  background: #f5f5f7;
+  color: #1d1d1f;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  z-index: 1000;
+
+  pointer-events: none;
+}
+
+.nav-inner {
+  pointer-events: auto;
+
+  width: calc(100% - 40px);
+  max-width: 1180px;
+
+  margin-top: 14px;
+
+  padding: 10px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(255,255,255,0.78);
+
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(0,0,0,0.08);
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.04);
+}
+
+.nav-name {
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  letter-spacing: -0.01em;
+
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+
+  gap: 42px;
+
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+
+  font-size: 15px;
+
+  color: #1d1d1f;
+
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.5;
+}
+
+/* =========================================================
+   MOBILE MENU ICON
+========================================================= */
+
+.menu-toggle {
+  width: 30px;
+  height: 30px;
+
+  position: relative;
+
+  display: none;
+
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 18px;
+  height: 1.5px;
+
+  background: #1d1d1f;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.menu-toggle span:first-child {
+  transform:
+    translate(-50%, -50%)
+    translateY(-4px);
+}
+
+.menu-toggle span:last-child {
+  transform:
+    translate(-50%, -50%)
+    translateY(4px);
+}
+
+.menu-toggle.active span:first-child {
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
+}
+
+.menu-toggle.active span:last-child {
+  transform:
+    translate(-50%, -50%)
+    rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+#overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0,0,0,0.15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.3s ease;
+
+  z-index: 998;
+}
+
+.side-menu {
+  position: fixed;
+
+  top: -100%;
+
+  left: 0;
+
+  width: 100%;
+
+  padding:
+    110px
+    30px
+    50px;
+
+  background: rgba(255,255,255,0.96);
+
+  -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
+
+  z-index: 999;
+
+  transition: top 0.45s cubic-bezier(.4,0,.2,1);
+
+  border-bottom:
+    1px solid rgba(0,0,0,0.08);
+}
+
+.side-menu.active {
+  top: 0;
+}
+
+.side-menu ul {
+  list-style: none;
+}
+
+.side-menu li {
+  margin-bottom: 24px;
+}
+
+.side-menu a {
+  text-decoration: none;
+
+  font-size: 30px;
+
+  font-weight: 500;
+
+  letter-spacing: -0.03em;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  min-height: 100vh;
+
+  max-width: 1400px;
+
+  margin: auto;
+
+  padding:
+    140px
+    6vw
+    90px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.eyebrow {
+  font-size: 13px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  color: #6e6e73;
+}
+
+.hero h1 {
+  margin-top: 22px;
+
+  font-size:
+    clamp(4rem, 7vw, 7.5rem);
+
+  line-height: 0.91;
+
+  font-weight: 500;
+
+  letter-spacing: -0.065em;
+}
+
+.hero-statement {
+  margin-top: 40px;
+
+  max-width: 570px;
+
+  font-size:
+    clamp(1.3rem, 2vw, 1.7rem);
+
+  line-height: 1.35;
+
+  letter-spacing: -0.025em;
+
+  color: #424245;
+}
+
+.hero-disciplines {
+  margin-top: 24px;
+
+  max-width: 560px;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  color: #6e6e73;
+}
+
+.hero-image {
+  width: 100%;
+}
+
+.hero-image img {
+  width: 100%;
+
+  aspect-ratio: 4 / 3;
+
+  object-fit: cover;
+
+  border-radius: 28px;
+
+  background: #e8e8ed;
+}
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+.section {
+  max-width: 1400px;
+
+  margin: auto;
+
+  padding:
+    130px
+    6vw
+    130px;
+}
+
+.section-intro {
+  max-width: 760px;
+}
+
+.section-intro h2 {
+  margin-top: 18px;
+
+  font-size:
+    clamp(2.8rem, 5vw, 5rem);
+
+  line-height: 1;
+
+  font-weight: 500;
+
+  letter-spacing: -0.055em;
+}
+
+.section-intro p {
+  margin-top: 25px;
+
+  max-width: 650px;
+
+  font-size: 18px;
+
+  line-height: 1.55;
+
+  color: #6e6e73;
+}
+
+/* =========================================================
+   WORK FILTERS
+========================================================= */
+
+.work-filters {
+  margin-top: 55px;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+}
+
+.filter-button {
+  border: 1px solid #d2d2d7;
+
+  background: rgba(255,255,255,0.7);
+
+  color: #1d1d1f;
+
+  padding:
+    9px
+    17px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.filter-button:hover {
+  border-color: #999;
+}
+
+.filter-button.active {
+  background: #1d1d1f;
+
+  border-color: #1d1d1f;
+
+  color: white;
+}
+
+/* =========================================================
+   PROJECT GRID
+========================================================= */
+
+.project-grid {
+  margin-top: 55px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 28px;
+}
+
+/* =========================================================
+   FEATURED PROJECTS
+========================================================= */
+
+.featured-grid {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+/* =========================================================
+   PROJECT CARD
+========================================================= */
+
+.project-card {
+  background: #fff;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(0,0,0,0.07);
+
+  transition:
+    transform 0.35s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.35s ease;
+
+  opacity: 1;
+
+  transform: scale(1);
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.08);
+}
+
+.project-card.hidden {
+  display: none;
+}
+
+.project-card a {
+  display: block;
+
+  text-decoration: none;
+}
+
+/* =========================================================
+   PROJECT IMAGE
+========================================================= */
+
+.project-image {
+  width: 100%;
+
+  aspect-ratio: 16 / 10;
+
+  overflow: hidden;
+
+  background: #e8e8ed;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+.project-card:hover
+.project-image img {
+  transform: scale(1.025);
+}
+
+/* =========================================================
+   PROJECT INFORMATION
+========================================================= */
+
+.project-info {
+  padding: 25px 25px 28px;
+}
+
+.project-type {
+  margin-bottom: 8px;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  color: #6e6e73;
+}
+
+.project-info h3 {
+  font-size: 24px;
+
+  line-height: 1.1;
+
+  font-weight: 500;
+
+  letter-spacing: -0.025em;
+}
+
+.project-description {
+  margin-top: 12px;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  color: #6e6e73;
+
+  max-width: 520px;
+}
+
+.project-link {
+  display: inline-block;
+
+  margin-top: 20px;
+
+  font-size: 14px;
+
+  color: #1d1d1f;
+}
+
+/* =========================================================
+   CATEGORY SECTIONS
+========================================================= */
+
+.category-section {
+  padding-top: 100px;
+}
+
+.category-heading {
+  max-width: 760px;
+}
+
+.category-number {
+  font-size: 13px;
+
+  color: #6e6e73;
+
+  letter-spacing: 0.08em;
+}
+
+.category-heading h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(2.5rem, 4vw, 4rem);
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  letter-spacing: -0.05em;
+}
+
+.category-heading p {
+  margin-top: 18px;
+
+  max-width: 620px;
+
+  color: #6e6e73;
+
+  font-size: 17px;
+
+  line-height: 1.55;
+}
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about-section {
+  max-width: none;
+
+  background: #1d1d1f;
+
+  color: white;
+
+  padding-left: 6vw;
+  padding-right: 6vw;
+}
+
+.about-inner {
+  max-width: 1200px;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1.4fr;
+
+  gap: 100px;
+}
+
+.about-title h2 {
+  margin-top: 18px;
+
+  font-size:
+    clamp(3rem, 6vw, 6rem);
+
+  font-weight: 500;
+
+  line-height: 0.92;
+
+  letter-spacing: -0.06em;
+}
+
+.about-text {
+  max-width: 650px;
+}
+
+.about-text .lead {
+  font-size:
+    clamp(1.4rem, 2.2vw, 1.9rem);
+
+  line-height: 1.4;
+
+  letter-spacing: -0.025em;
+
+  margin-bottom: 35px;
+}
+
+.about-text p:not(.lead) {
+  color: #a1a1a6;
+
+  font-size: 17px;
+
+  line-height: 1.65;
+
+  margin-bottom: 22px;
+}
+
+.about-links {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 28px;
+
+  margin-top: 40px;
+}
+
+.about-links a {
+  color: white;
+
+  text-decoration: none;
+
+  padding-bottom: 5px;
+
+  border-bottom:
+    1px solid #555;
+
+  transition: border-color 0.2s ease;
+}
+
+.about-links a:hover {
+  border-color: white;
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-section {
+  min-height: 65vh;
+
+  display: flex;
+
+  align-items: center;
+
+  max-width: none;
+
+  padding-left: 6vw;
+  padding-right: 6vw;
+}
+
+.contact-inner {
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: auto;
+}
+
+.contact-inner h2 {
+  margin-top: 18px;
+
+  font-size:
+    clamp(3.5rem, 7vw, 7rem);
+
+  line-height: 0.95;
+
+  font-weight: 500;
+
+  letter-spacing: -0.06em;
+}
+
+.contact-inner p {
+  margin-top: 30px;
+
+  color: #6e6e73;
+
+  font-size: 18px;
+}
+
+.email {
+  display: inline-block;
+
+  margin-top: 25px;
+
+  font-size:
+    clamp(1.1rem, 2vw, 1.6rem);
+
+  color: #1d1d1f;
+
+  text-decoration: none;
+
+  border-bottom:
+    1px solid #aaa;
+
+  padding-bottom: 6px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  max-width: 1200px;
+
+  margin: auto;
+
+  padding:
+    30px
+    6vw
+    50px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  color: #6e6e73;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   SCROLL ANIMATION
+========================================================= */
+
+.fade {
+  opacity: 0;
+
+  transform: translateY(25px);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.fade.visible {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .nav-links {
+    gap: 25px;
+  }
+
+  .hero {
+    gap: 40px;
+  }
+
+  .featured-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .about-inner {
+    gap: 60px;
+  }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* NAV */
+
+  .nav-inner {
+    width: calc(100% - 24px);
+
+    margin-top: 10px;
+
+    padding:
+      9px
+      13px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* HERO */
+
+  .hero {
+    min-height: auto;
+
+    padding:
+      110px
+      20px
+      70px;
+
+    display: flex;
+
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    gap: 35px;
+  }
+
+  .hero-image img {
+    border-radius: 20px;
+
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero h1 {
+    font-size:
+      clamp(3.6rem, 15vw, 5.5rem);
+  }
+
+  .hero-statement {
+    margin-top: 28px;
+
+    font-size: 1.3rem;
+  }
+
+  .hero-disciplines {
+    font-size: 14px;
+  }
+
+  /* SECTIONS */
+
+  .section {
+    padding:
+      90px
+      20px;
+  }
+
+  .section-intro h2 {
+    font-size: 3rem;
+  }
+
+  /* FILTERS */
+
+  .work-filters {
+    margin-top: 40px;
+
+    gap: 7px;
+  }
+
+  .filter-button {
+    padding:
+      8px
+      14px;
+
+    font-size: 13px;
+  }
+
+  /* GRIDS */
+
+  .project-grid,
+  .featured-grid {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+    margin-top: 40px;
+  }
+
+  /* CARDS */
+
+  .project-card {
+    border-radius: 20px;
+  }
+
+  .project-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .project-info {
+    padding:
+      21px
+      20px
+      24px;
+  }
+
+  .project-info h3 {
+    font-size: 21px;
+  }
+
+  /* CATEGORY */
+
+  .category-section {
+    padding-top: 70px;
+  }
+
+  .category-heading h2 {
+    font-size: 2.8rem;
+  }
+
+  /* ABOUT */
+
+  .about-section {
+    padding:
+      90px
+      20px;
+  }
+
+  .about-inner {
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+  .about-title h2 {
+    font-size: 4rem;
+  }
+
+  .about-text .lead {
+    font-size: 1.4rem;
+  }
+
+  .about-text p:not(.lead) {
+    font-size: 16px;
+  }
+
+  /* CONTACT */
+
+  .contact-section {
+    min-height: 60vh;
+
+    padding:
+      90px
+      20px;
+  }
+
+  .contact-inner h2 {
+    font-size: 4rem;
+  }
+
+  /* FOOTER */
+
+  .footer {
+    padding:
+      25px
+      20px
+      40px;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .fade {
+    opacity: 1;
+
+    transform: none;
+  }
+
+}
+
+</style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+
+<!-- =======================================================
+     NAVIGATION
+======================================================== -->
+
+<nav class="nav">
+
+  <div class="nav-inner">
+
+    <a
+      href="#top"
+      class="nav-name">
+      german fernandez
+    </a>
+
+    <ul class="nav-links">
+
+      <li>
+        <a href="#work">work</a>
+      </li>
+
+      <li>
+        <a href="#about">about</a>
+      </li>
+
+      <li>
+        <a href="#contact">contact</a>
+      </li>
+
+    </ul>
+
+    <div
+      class="menu-toggle"
+      id="menuToggle"
+      onclick="toggleMenu()"
+      aria-label="Open menu"
+      aria-expanded="false">
+
+      <span></span>
+      <span></span>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<!-- MOBILE OVERLAY -->
+
+<div id="overlay"></div>
+
+<!-- MOBILE MENU -->
+
+<div
+  class="side-menu"
+  id="sideMenu">
+
+  <ul>
+
+    <li>
+      <a
+        href="#work"
+        onclick="closeMenu()">
+        work
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="#about"
+        onclick="closeMenu()">
+        about
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="#contact"
+        onclick="closeMenu()">
+        contact
+      </a>
+    </li>
+
+  </ul>
+
+</div>
+
+<main id="top">
+
+<!-- =======================================================
+     HERO
+======================================================== -->
+
+<section class="hero">
+
+  <div class="hero-content fade">
+
+    <p class="eyebrow">
+      german fernandez
+    </p>
+
+    <h1>
+      information <br>
+      designer
+    </h1>
+
+    <p class="hero-statement">
+      I design ways for people to understand,
+      navigate and engage with information.
+    </p>
+
+    <p class="hero-disciplines">
+      Information design · Data visualization ·
+      Interactive experiences · Editorial · Illustration
+    </p>
+
+  </div>
+
+  <div class="hero-image fade">
+
+    <img
+      src="./images/design_gefercan_dataviz_01_portfolio_page2.webp"
+      alt="Information design by German Fernandez">
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     WORK
+======================================================== -->
+
+<section
+  id="work"
+  class="section">
+
+  <div class="section-intro fade">
+
+    <p class="eyebrow">
+      Work
+    </p>
+
+    <h2>
+      Information,
+      visualization
+      and interaction.
+    </h2>
+
+    <p>
+      Selected projects exploring different
+      kinds of information through visual,
+      editorial and interactive design.
+    </p>
+
+  </div>
+
+  <!-- FILTERS -->
+
+  <div
+    class="work-filters fade"
+    role="group"
+    aria-label="Filter projects">
+
+    <button
+      class="filter-button active"
+      data-filter="all">
+      All
+    </button>
+
+  <!--<button
+      class="filter-button"
+      data-filter="information">
+      Information
+    </button> -->
+
+   
+
+    <button
+      class="filter-button"
+      data-filter="interactive">
+      Interactive
+    </button>
+
+    <button
+      class="filter-button"
+      data-filter="editorial">
+      Editorial
+    </button>
+
+    <button
+      class="filter-button"
+      data-filter="illustration">
+      Illustration
+    </button>
+
+  </div>
+
+  <!-- =====================================================
+       FEATURED PROJECTS
+  ====================================================== -->
+
+  <div
+    class="project-grid featured-grid"
+    id="projectGrid">
+
+    <!-- RENAISSANCE -->
+
+    <article
+      class="project-card fade"
+      data-category="interactive information">
+
+      <a
+        href="https://gefercan2.github.io/demo/Renaissance_dashboard_3_1.html"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_dataviz_01_portfolio_page2.webp"
+            alt="Renaissance interactive information project">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Interactive · Information
+          </p>
+
+          <h3>
+            Renaissance Network
+          </h3>
+
+          <p class="project-description">
+            An interactive exploration of artists,
+            cities, relationships and chronology
+            through a visual information system.
+          </p>
+
+          <span class="project-link">
+            Explore project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- FIFA -->
+
+    <article
+      class="project-card fade"
+      data-category="interactive information">
+
+      <a
+        href="https://gefercan2.github.io/demo/FIFA_World_Cup.html"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_dataviz_02_portfolio_page2.webp"
+            alt="FIFA World Cup data visualization">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Interactive · Data visualization
+          </p>
+
+          <h3>
+            FIFA World Cup
+          </h3>
+
+          <p class="project-description">
+            An interactive exploration of tournament
+            history, performance and statistical data.
+          </p>
+
+          <span class="project-link">
+            Explore project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- KANT -->
+
+    <article
+      class="project-card fade"
+      data-category="interactive information">
+
+      <a
+        href="https://gefercan2.github.io/demo/kant_01.html"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_dataviz_03_portfolio_page2.webp"
+            alt="Kant knowledge visualization">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Interactive · Knowledge visualization
+          </p>
+
+          <h3>
+            Kant
+          </h3>
+
+          <p class="project-description">
+            An experimental visual structure for
+            navigating abstract concepts and ideas.
+          </p>
+
+          <span class="project-link">
+            Explore project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- INFORMATION PROJECT -->
+
+    <article
+      class="project-card fade"
+      data-category="information">
+
+      <a href="#">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_infographics_sport.webp"
+            alt="Sports information graphics">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Information design
+          </p>
+
+          <h3>
+            Sports Information
+          </h3>
+
+          <p class="project-description">
+            Visualizing sports information through
+            diagrams, statistics and visual narratives.
+          </p>
+
+          <span class="project-link">
+            View project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- EDITORIAL -->
+
+    <article
+      class="project-card fade"
+      data-category="editorial">
+
+      <a href="#">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_editorial_book_cover1.webp"
+            alt="Editorial book design">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Editorial design
+          </p>
+
+          <h3>
+            Books & Publications
+          </h3>
+
+          <p class="project-description">
+            Editorial systems combining typography,
+            information structure and visual hierarchy.
+          </p>
+
+          <span class="project-link">
+            View project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- GENDER BALANCE -->
+
+    <article
+      class="project-card fade"
+      data-category="editorial information">
+
+      <a href="#">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_editorial_genderbalance1.webp"
+            alt="Gender balance editorial report">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Editorial · Information
+          </p>
+
+          <h3>
+            Gender Balance
+          </h3>
+
+          <p class="project-description">
+            Information-led editorial design for
+            a report combining data and visual communication.
+          </p>
+
+          <span class="project-link">
+            View project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- ILLUSTRATION -->
+
+    <article
+      class="project-card fade"
+      data-category="illustration">
+
+      <a href="#">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_illustration_ads.webp"
+            alt="Illustration work">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Illustration
+          </p>
+
+          <h3>
+            Editorial Illustration
+          </h3>
+
+          <p class="project-description">
+            Digital and analogue illustration for
+            editorial and visual communication.
+          </p>
+
+          <span class="project-link">
+            View project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- ILLUSTRATION 2 -->
+
+    <article
+      class="project-card fade"
+      data-category="illustration">
+
+      <a href="#">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_illustration_tintin.webp"
+            alt="Narrative illustration">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Illustration
+          </p>
+
+          <h3>
+            Narrative Illustration
+          </h3>
+
+          <p class="project-description">
+            Image-making exploring character,
+            narrative and visual storytelling.
+          </p>
+
+          <span class="project-link">
+            View project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+    <!-- ILLUSTRATION 3 -->
+
+    <article
+      class="project-card fade"
+      data-category="illustration">
+
+      <a href="#">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_illustration_poster.webp"
+            alt="Illustration poster">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Illustration · Poster
+          </p>
+
+          <h3>
+            Posters
+          </h3>
+
+          <p class="project-description">
+            Illustration-led visual communication
+            for posters and graphic applications.
+          </p>
+
+          <span class="project-link">
+            View project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     ABOUT
+======================================================== -->
+
+<section
+  id="about"
+  class="about-section">
+
+  <div class="about-inner section">
+
+    <div class="about-title fade">
+
+      <p class="eyebrow">
+        About
+      </p>
+
+      <h2>
+        German<br>
+        Fernandez
+      </h2>
+
+    </div>
+
+    <div class="about-text fade">
+
+      <p class="lead">
+        I am an information designer working
+        across information graphics, data
+        visualization, editorial design,
+        interactive experiences and illustration.
+      </p>
+
+      <p>
+        My work focuses on making complex
+        subjects clearer through visual structure,
+        hierarchy, visualization and interaction.
+      </p>
+
+      <p>
+        I work across different subjects and
+        formats, from statistical data and
+        historical information to publications,
+        digital experiences and illustration.
+      </p>
+
+      <div class="about-links">
+
+        <a
+          href="https://www.behance.net/german_fernandez"
+          target="_blank"
+          rel="noopener noreferrer">
+          Behance →
+        </a>
+
+        <a
+          href="https://www.linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer">
+          LinkedIn →
+        </a>
+
+        <a href="#">
+          CV →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     CONTACT
+======================================================== -->
+
+<section
+  id="contact"
+  class="contact-section">
+
+  <div class="contact-inner fade">
+
+    <p class="eyebrow">
+      Contact
+    </p>
+
+    <h2>
+      Have a project?
+    </h2>
+
+    <p>
+      For project enquiries, collaborations
+      or professional opportunities:
+    </p>
+
+    <a
+      class="email"
+      href="mailto:design.gefercan@outlook.com">
+      design.gefercan@outlook.com
+    </a>
+
+  </div>
+
+</section>
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
+<footer class="footer">
+
+  <span>
+    © German Fernandez
+  </span>
+
+  <span>
+    Information Designer
+  </span>
+
+</footer>
+
+</main>
+
+<script>
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menu =
+  document.getElementById("sideMenu");
+
+const toggle =
+  document.getElementById("menuToggle");
+
+const overlay =
+  document.getElementById("overlay");
+
+function toggleMenu() {
+
+  const isOpen =
+    menu.classList.toggle("active");
+
+  toggle.classList.toggle("active");
+
+  toggle.setAttribute(
+    "aria-expanded",
+    isOpen
+  );
+
+  overlay.style.opacity =
+    isOpen ? "1" : "0";
+
+  overlay.style.pointerEvents =
+    isOpen ? "auto" : "none";
+
+}
+
+function closeMenu() {
+
+  menu.classList.remove("active");
+
+  toggle.classList.remove("active");
+
+  toggle.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+  overlay.style.opacity = "0";
+
+  overlay.style.pointerEvents = "none";
+
+}
+
+overlay.addEventListener(
+  "click",
+  closeMenu
+);
+
+/* =========================================================
+   WORK FILTER
+========================================================= */
+
+const filterButtons =
+  document.querySelectorAll(".filter-button");
+
+const projectCards =
+  document.querySelectorAll(".project-card");
+
+filterButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const filter =
+      button.dataset.filter;
+
+    /* Active button */
+
+    filterButtons.forEach(btn => {
+
+      btn.classList.remove("active");
+
+    });
+
+    button.classList.add("active");
+
+    /* Filter cards */
+
+    projectCards.forEach(card => {
+
+      const categories =
+        card.dataset.category || "";
+
+      if (
+        filter === "all" ||
+        categories.includes(filter)
+      ) {
+
+        card.classList.remove("hidden");
+
+      } else {
+
+        card.classList.add("hidden");
+
+      }
+
+    });
+
+  });
+
+});
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.classList.add(
+            "visible"
+          );
+
+          observer.unobserve(
+            entry.target
+          );
+
+        }
+
+      });
+
+    },
+    {
+      threshold: 0.12
+    }
+  );
+
+document
+  .querySelectorAll(".fade")
+  .forEach(element => {
+
+    observer.observe(element);
+
+  });
+
+/* =========================================================
+   ESCAPE KEY CLOSES MOBILE MENU
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Escape") {
+
+      closeMenu();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
+```

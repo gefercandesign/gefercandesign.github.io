@@ -1098,6 +1098,9 @@ button {
 
 
 
+
+
+
 <body>
 
 <!-- =======================================================
@@ -1286,25 +1289,50 @@ button {
       Work
     </p>
 
-    <h2>
-      Information,
-      visualization
-      and interaction.
-    </h2>
-
-    <p>
-      Selected projects exploring different
-      kinds of information through visual,
-      editorial and interactive design.
-    </p>
-
   </div>
 
 
   
-  <div
-    class="project-grid featured-grid"
-    id="projectGrid">
+  <div class="project-grid featured-grid" id="projectGrid">
+
+<!--           <h2 class="intro-category" data-category="interactive">
+          Information,
+          visualization
+          and interaction.
+          </h2>
+          
+          <p>
+          Selected projects exploring different
+          kinds of information through visual,
+          editorial and interactive design.
+          </p>
+
+
+          <h2  class="intro-category" data-category="editorial"> 
+          Editorial
+          visualization
+          and interaction.
+          </h2>
+          
+          <p class="in">
+          Selected projects exploring different
+          kinds of information through visual,
+          editorial and interactive design.
+          </p>
+
+
+
+          <h2 class="intro-category"  data-category="illustration"> 
+          Illustration
+          visualization
+          and interaction.
+          </h2>
+
+        <p>
+          Selected projects exploring different
+          kinds of information through visual,
+          editorial and interactive design.
+    </p> -->
 
     <!-- RENAISSANCE -->
 
@@ -1439,6 +1467,50 @@ button {
 
     </article>
 
+        <!-- globe -->
+
+    <article
+      class="project-card fade"
+      data-category="interactive information">
+
+      <a
+        href="https://gefercan2.github.io/demo/Renaissance_3d_sphere.html"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        <div class="project-image">
+
+          <img
+            src="./images/design_gefercan_dataviz_03_portfolio_page2.webp"
+            alt="Kant knowledge visualization">
+
+        </div>
+
+        <div class="project-info">
+
+          <p class="project-type">
+            Interactive · Knowledge visualization
+          </p>
+
+          <h3>
+            Kant
+          </h3>
+
+          <p class="project-description">
+            An experimental visual structure for
+            navigating abstract concepts and ideas.
+          </p>
+
+          <span class="project-link">
+            Explore project →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
     <!-- INFORMATION PROJECT -->
 
     <article
@@ -1486,7 +1558,7 @@ button {
       class="project-card fade"
       data-category="editorial">
 
-      <a href="project_01_ux_ui.html">
+      <a href="project_01_editorial.html">
 
         <div class="project-image">
 
@@ -1527,7 +1599,7 @@ button {
       class="project-card fade"
       data-category="editorial information">
 
-      <a href="#">
+       <a href="project_01_book.html">
 
         <div class="project-image">
 
@@ -1651,7 +1723,8 @@ button {
       class="project-card fade"
       data-category="illustration">
 
-      <a href="#">
+       <a href="project_01_illustration.html">
+
 
         <div class="project-image">
 
@@ -1685,6 +1758,7 @@ button {
       </a>
 
     </article>
+    
 
   </div>
 
@@ -1818,6 +1892,11 @@ button {
 
 
 
+
+
+
+
+
 <script>
 
 /* =========================================================
@@ -1884,6 +1963,7 @@ const filterButtons =
 
 const projectCards =
   document.querySelectorAll(".project-card");
+  document.querySelectorAll(".intro-category");
 
 filterButtons.forEach(button => {
 
